@@ -25,6 +25,7 @@ class ContractOut(BaseModel):
     status: ContractStatus
     uploaded_at: datetime
     extracted_fields: Optional[ExtractedFieldsOut] = None
+    raw_text: Optional[str] = None
 
     class Config:
         from_attributes = True
