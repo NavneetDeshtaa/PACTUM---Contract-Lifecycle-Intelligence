@@ -5,54 +5,242 @@ import {
   BarChart3,
   ClipboardCheck,
   Workflow,
-  Plus,
   Settings,
   LogOut,
   Menu,
   X,
-  Search,
+  Star,
+  CalendarCheck,
+  CheckCircle2,
+  Sparkles,
+  Plus,
 } from "lucide-react";
 
 import {
   NavLink,
   Outlet,
+  useLocation,
   useNavigate,
 } from "react-router-dom";
 
 import NotificationBell from "../components/notifications/NotificationBell";
 import { tokenStorage } from "../lib/tokenStorage";
 
-const navigation = [
+/* ============================================================
+   GLOBAL NAVIGATION
+============================================================ */
+
+const mainNavigation = [
   {
-    name: "All contracts",
+    name: "Contracts",
     path: "/app/contracts",
-    icon: FileText,
-  },
-  {
-    name: "Insights",
-    path: "/app/analytics",
-    icon: BarChart3,
+    section: "contracts",
   },
   {
     name: "Obligations",
     path: "/app/obligations",
-    icon: ClipboardCheck,
+    section: "obligations",
   },
   {
-    name: "Workflow Designer",
+    name: "Workflow",
     path: "/app/workflows",
-    icon: Workflow,
+    section: "workflows",
+  },
+  {
+    name: "Insights",
+    path: "/app/analytics",
+    section: "analytics",
   },
 ];
 
+/* ============================================================
+   CONTRACT SIDEBAR
+============================================================ */
+
+const contractNavigation = [
+  {
+    name: "Starred",
+    path: "/app/contracts/starred",
+    icon: Star,
+    end: true,
+  },
+  {
+    name: "All contracts",
+    path: "/app/contracts",
+    icon: FileText,
+    end: true,
+  },
+  {
+    name: "Active contracts",
+    path: "/app/contracts/active",
+    icon: CalendarCheck,
+    end: true,
+  },
+  {
+    name: "Upcoming deadlines",
+    path: "/app/contracts/upcoming",
+    icon: CalendarCheck,
+    end: true,
+  },
+  {
+    name: "Executed contracts",
+    path: "/app/contracts/executed",
+    icon: CheckCircle2,
+    end: true,
+  },
+];
+
+/* ============================================================
+   OBLIGATION SIDEBAR
+============================================================ */
+
+const obligationNavigation = [
+  {
+    name: "All obligations",
+    path: "/app/obligations",
+    icon: ClipboardCheck,
+    end: true,
+  },
+  {
+    name: "Upcoming",
+    path: "/app/obligations/upcoming",
+    icon: CalendarCheck,
+    end: true,
+  },
+  {
+    name: "Overdue",
+    path: "/app/obligations/overdue",
+    icon: CheckCircle2,
+    end: true,
+  },
+];
+
+/* ============================================================
+   WORKFLOW SIDEBAR
+============================================================ */
+
+const workflowNavigation = [
+  {
+    name: "All workflows",
+    path: "/app/workflows",
+    icon: Workflow,
+    end: true,
+  },
+  {
+    name: "Templates",
+    path: "/app/workflows/templates",
+    icon: FileText,
+    end: true,
+  },
+  {
+    name: "Active workflows",
+    path: "/app/workflows/active",
+    icon: CheckCircle2,
+    end: true,
+  },
+];
+
+/* ============================================================
+   INSIGHTS SIDEBAR
+============================================================ */
+
+const insightsNavigation = [
+  {
+    name: "Overview",
+    path: "/app/analytics",
+    icon: BarChart3,
+    end: true,
+  },
+  {
+    name: "Contract analytics",
+    path: "/app/analytics/contracts",
+    icon: FileText,
+    end: true,
+  },
+  {
+    name: "Risk analytics",
+    path: "/app/analytics/risk",
+    icon: Sparkles,
+    end: true,
+  },
+];
+
+/* ============================================================
+   TYPES
+============================================================ */
+
+type NavigationItem = {
+  name: string;
+  path: string;
+  icon: React.ElementType;
+  end?: boolean;
+};
+
+type ContextSidebarProps = {
+  navigation: NavigationItem[];
+  handleLogout: () => void;
+};
+
+/* ============================================================
+   MAIN APP PAGE
+============================================================ */
+
 export default function AppPage() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // =====================================================
-  // LOGOUT
-  // =====================================================
+  /* ==========================================================
+     ACTIVE SECTION
+  ========================================================== */
+
+  const getActiveSection = () => {
+    const pathname = location.pathname;
+
+    if (pathname.startsWith("/app/obligations")) {
+      return "obligations";
+    }
+
+    if (pathname.startsWith("/app/workflows")) {
+      return "workflows";
+    }
+
+    if (pathname.startsWith("/app/analytics")) {
+      return "analytics";
+    }
+
+    return "contracts";
+  };
+
+  const activeSection = getActiveSection();
+
+  /* ==========================================================
+     CONTEXTUAL SIDEBAR
+  ========================================================== */
+
+  const getSidebarNavigation = (): NavigationItem[] => {
+    switch (activeSection) {
+      case "obligations":
+        return obligationNavigation;
+
+      case "workflows":
+        return workflowNavigation;
+
+      case "analytics":
+        return insightsNavigation;
+
+      case "contracts":
+      default:
+        return contractNavigation;
+    }
+  };
+
+  const sidebarNavigation = getSidebarNavigation();
+
+  /* ==========================================================
+     LOGOUT
+  ========================================================== */
 
   const handleLogout = () => {
     tokenStorage.clear();
@@ -64,148 +252,225 @@ export default function AppPage() {
     });
   };
 
+  const closeMobileSidebar = () => {
+    setSidebarOpen(false);
+  };
+
+  /* ==========================================================
+     RENDER
+  ========================================================== */
+
   return (
-    <div className="h-screen w-full overflow-hidden bg-white text-[#17191f]">
-      <div className="flex h-full w-full">
-        {/* =====================================================
-            DESKTOP SIDEBAR
-        ===================================================== */}
-
-        <aside className="hidden h-full w-[270px] shrink-0 flex-col border-r border-[#e7e7e7] bg-white lg:flex">
-          <SidebarContent
-            navigate={navigate}
-            handleLogout={handleLogout}
-          />
-        </aside>
+    <div className="h-screen w-full overflow-hidden bg-white text-[#181A1F]">
+      <div className="flex h-full w-full flex-col">
 
         {/* =====================================================
-            MOBILE SIDEBAR
+            TOP NAVIGATION
         ===================================================== */}
 
-        {sidebarOpen && (
-          <div className="fixed inset-0 z-50 lg:hidden">
+        <header className="z-40 shrink-0 border-b border-[#E9ECEA] bg-white">
+          <div className="flex h-16 items-center px-4 sm:px-6 lg:px-8">
+
+            {/* =================================================
+                MOBILE MENU
+            ================================================= */}
+
             <button
               type="button"
-              aria-label="Close sidebar"
-              onClick={() => setSidebarOpen(false)}
-              className="absolute inset-0 bg-black/20"
-            />
+              onClick={() => setSidebarOpen(true)}
+              className="mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[#545B57] transition-colors hover:bg-[#F5F6F5] hover:text-[#181A1F] lg:hidden"
+              aria-label="Open navigation"
+            >
+              <Menu size={19} strokeWidth={1.8} />
+            </button>
 
-            <aside className="relative z-10 flex h-full w-[280px] flex-col bg-white shadow-xl">
-              <button
-                type="button"
-                onClick={() => setSidebarOpen(false)}
-                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-md text-[#666a73] transition-colors hover:bg-[#f4f4f3] hover:text-[#17191f]"
-                aria-label="Close sidebar"
-              >
-                <X size={18} />
-              </button>
+            {/* =================================================
+                BRAND
+            ================================================= */}
 
-              <SidebarContent
-                navigate={(path: string) => {
-                  navigate(path);
-                  setSidebarOpen(false);
-                }}
-                handleLogout={handleLogout}
-              />
-            </aside>
-          </div>
-        )}
+            <button
+              type="button"
+              onClick={() => navigate("/app/contracts")}
+              className="flex w-auto shrink-0 items-center gap-3 lg:w-[220px]"
+            >
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#184C40] text-sm font-bold text-white">
+                P
+              </div>
 
-        {/* =====================================================
-            RIGHT SIDE
-        ===================================================== */}
-
-        <div className="flex min-w-0 flex-1 flex-col">
-          {/* =================================================
-              TOP NAVBAR
-          ================================================= */}
-
-          <header className="flex h-[76px] shrink-0 items-center justify-between border-b border-[#e7e7e7] bg-white px-5 sm:px-7 lg:px-9">
-            {/* LEFT */}
-
-            <div className="flex items-center gap-4">
-              <button
-                type="button"
-                onClick={() => setSidebarOpen(true)}
-                className="flex h-9 w-9 items-center justify-center rounded-md text-[#17191f] transition-colors hover:bg-[#f4f4f3] lg:hidden"
-                aria-label="Open sidebar"
-              >
-                <Menu size={20} />
-              </button>
-
-              {/* Mobile brand */}
-
-              <button
-                type="button"
-                onClick={() => navigate("/app/contracts")}
-                className="font-serif text-xl font-semibold tracking-tight text-[#17191f] lg:hidden"
-              >
-                PACTUM
-              </button>
-
-              {/* Desktop title */}
-
-              <div className="hidden lg:block">
-                <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-[#9a9ca3]">
-                  Workspace
+              <div className="hidden text-left sm:block">
+                <p className="text-[15px] font-semibold tracking-[-0.025em] text-[#181A1F]">
+                  PACTUM
                 </p>
 
-                <p className="mt-1 text-[17px] font-medium tracking-[-0.02em] text-[#17191f]">
-                  Contract Intelligence
+                <p className="mt-[1px] text-[8px] font-semibold uppercase tracking-[0.18em] text-[#929995]">
+                  Intelligence
                 </p>
               </div>
-            </div>
+            </button>
 
-            {/* RIGHT */}
+            {/* =================================================
+                DESKTOP GLOBAL NAV
+            ================================================= */}
 
-            <div className="flex items-center gap-3">
-              {/* SEARCH */}
+            <nav className="hidden h-16 items-center gap-8 lg:flex">
+              {mainNavigation.map((item) => {
+                const isActive = activeSection === item.section;
 
-              <button
-                type="button"
-                className="hidden h-10 items-center gap-3 rounded-full border border-[#e3e3e3] bg-white px-4 text-sm text-[#555963] transition-colors hover:bg-[#f7f7f6] sm:flex"
-              >
-                <Search size={16} />
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    className={[
+                      "relative flex h-16 items-center whitespace-nowrap text-[14px] font-medium transition-colors",
+                      isActive
+                        ? "text-[#181A1F]"
+                        : "text-[#707773] hover:text-[#181A1F]",
+                    ].join(" ")}
+                  >
+                    {item.name}
 
-                <span>Search</span>
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#184C40]" />
+                    )}
+                  </NavLink>
+                );
+              })}
 
-                <span className="ml-3 rounded-md border border-[#dddddd] bg-[#f7f7f6] px-1.5 py-0.5 text-[10px] text-[#979aa0]">
-                  ⌘ K
-                </span>
-              </button>
+              {/* ===============================================
+                  NOTIFICATION
+              =============================================== */}
 
-              {/* NOTIFICATIONS */}
+              <div className="ml-1 flex items-center border-l border-[#E9ECEA] pl-5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-[#F5F6F5]">
+                  <NotificationBell />
+                </div>
+              </div>
+            </nav>
 
-              <div className="flex h-10 items-center justify-center">
+            {/* =================================================
+                MOBILE NOTIFICATION
+            ================================================= */}
+
+            <div className="ml-auto lg:hidden">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg hover:bg-[#F5F6F5]">
                 <NotificationBell />
               </div>
-
-              {/* ACCOUNT */}
-
-              <div className="ml-1 flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#17191f] text-[11px] font-semibold text-white">
-                  ND
-                </div>
-
-                <div className="hidden xl:block">
-                  <p className="text-xs font-semibold leading-none text-[#17191f]">
-                    Account
-                  </p>
-
-                  <p className="mt-1 text-[10px] leading-none text-[#777b83]">
-                    Workspace admin
-                  </p>
-                </div>
-              </div>
             </div>
-          </header>
+          </div>
 
-          {/* =================================================
-              PAGE CONTENT
-          ================================================= */}
+          {/* ===================================================
+              MOBILE MAIN NAVIGATION
+          =================================================== */}
 
-          <main className="min-h-0 flex-1 overflow-y-auto bg-white">
+          <div className="flex overflow-x-auto border-t border-[#F0F1F0] px-3 lg:hidden">
+            {mainNavigation.map((item) => {
+              const isActive = activeSection === item.section;
+
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  className={[
+                    "relative flex h-11 shrink-0 items-center px-4 text-[12px] font-medium",
+                    isActive
+                      ? "text-[#181A1F]"
+                      : "text-[#737A76]",
+                  ].join(" ")}
+                >
+                  {item.name}
+
+                  {isActive && (
+                    <span className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#184C40]" />
+                  )}
+                </NavLink>
+              );
+            })}
+          </div>
+        </header>
+
+        {/* =====================================================
+            BODY
+        ===================================================== */}
+
+        <div className="flex min-h-0 flex-1">
+
+          {/* ===================================================
+              DESKTOP SIDEBAR
+          =================================================== */}
+
+          <aside className="hidden w-[220px] shrink-0 border-r border-[#E9ECEA] bg-white lg:flex lg:flex-col">
+            <ContextSidebar
+              navigation={sidebarNavigation}
+              handleLogout={handleLogout}
+            />
+          </aside>
+
+          {/* ===================================================
+              MOBILE SIDEBAR
+          =================================================== */}
+
+          {sidebarOpen && (
+            <div className="fixed inset-0 z-50 lg:hidden">
+
+              {/* BACKDROP */}
+
+              <button
+                type="button"
+                aria-label="Close navigation"
+                onClick={closeMobileSidebar}
+                className="absolute inset-0 bg-[#10211D]/20 backdrop-blur-[1px]"
+              />
+
+              {/* DRAWER */}
+
+              <aside className="relative z-10 flex h-full w-[270px] flex-col border-r border-[#E7EAE8] bg-white shadow-xl">
+                <div className="flex h-16 items-center border-b border-[#E9ECEA] px-5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigate("/app/contracts");
+                      closeMobileSidebar();
+                    }}
+                    className="flex items-center gap-3"
+                  >
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#184C40] text-sm font-bold text-white">
+                      P
+                    </div>
+
+                    <div className="text-left">
+                      <p className="text-[15px] font-semibold tracking-[-0.025em] text-[#181A1F]">
+                        PACTUM
+                      </p>
+
+                      <p className="text-[8px] uppercase tracking-[0.18em] text-[#929995]">
+                        Intelligence
+                      </p>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={closeMobileSidebar}
+                    className="ml-auto flex h-9 w-9 items-center justify-center rounded-lg text-[#69716D] transition-colors hover:bg-[#F5F6F5] hover:text-[#181A1F]"
+                    aria-label="Close sidebar"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+
+                <ContextSidebar
+                  navigation={sidebarNavigation}
+                  handleLogout={handleLogout}
+                />
+              </aside>
+            </div>
+          )}
+
+          {/* ===================================================
+              MAIN CONTENT
+          =================================================== */}
+
+          <main className="min-w-0 flex-1 overflow-y-auto bg-white">
             <Outlet />
           </main>
         </div>
@@ -215,162 +480,119 @@ export default function AppPage() {
 }
 
 /* ============================================================
-   SIDEBAR
+   CONTEXT SIDEBAR
 ============================================================ */
 
-type SidebarContentProps = {
-  navigate: (path: string) => void;
-  handleLogout: () => void;
-};
-
-function SidebarContent({
-  navigate,
+function ContextSidebar({
+  navigation,
   handleLogout,
-}: SidebarContentProps) {
+}: ContextSidebarProps) {
+  const navigate = useNavigate();
+
   return (
-    <>
-      {/* =====================================================
-          BRAND
-      ===================================================== */}
+    <div className="flex min-h-0 flex-1 flex-col px-4 py-6">
+      {/* NAVIGATION */}
+      <nav className="space-y-1">
+        {navigation.map((item) => {
+          const Icon = item.icon;
 
-      <div className="flex h-[76px] shrink-0 items-center border-b border-[#e7e7e7] px-6">
-        <button
-          type="button"
-          onClick={() => navigate("/app/contracts")}
-          className="flex items-center gap-3"
-        >
-          {/* Minimal symbol */}
+          return (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.end}
+              className={({ isActive }) =>
+                [
+                  "group flex h-11 items-center gap-3 rounded-lg px-3 text-[13px] transition-colors",
+                  isActive
+                    ? "bg-[#F1F3F2] font-semibold text-[#181A1F]"
+                    : "font-medium text-[#626965] hover:bg-[#F7F8F7] hover:text-[#181A1F]",
+                ].join(" ")
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <Icon
+                    size={17}
+                    strokeWidth={isActive ? 1.9 : 1.7}
+                    className={
+                      isActive
+                        ? "text-[#184C40]"
+                        : "text-[#7D8581] group-hover:text-[#4B5450]"
+                    }
+                  />
 
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#17191f] text-xs font-semibold text-white">
-            P
-          </div>
+                  <span>{item.name}</span>
+                </>
+              )}
+            </NavLink>
+          );
+        })}
+      </nav>
 
-          <div className="text-left">
-            <p className="font-serif text-[18px] font-semibold tracking-[-0.025em] text-[#17191f]">
-              PACTUM
-            </p>
-
-            <p className="mt-0.5 text-[8px] font-semibold uppercase tracking-[0.2em] text-[#9a9ca3]">
-              Intelligence
-            </p>
-          </div>
-        </button>
-      </div>
-
-      {/* =====================================================
-          SIDEBAR CONTENT
-      ===================================================== */}
-
-      <div className="flex min-h-0 flex-1 flex-col px-4 py-6">
-        {/* WORKSPACE */}
-
-        <p className="mb-4 px-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-[#a0a2a8]">
-          Workspace
-        </p>
-
-        <nav className="space-y-2">
-          {navigation.map((item) => {
-            const Icon = item.icon;
-
-            return (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  [
-                    "group relative flex h-12 items-center gap-3 rounded-[10px] px-3 text-[14px] transition-all",
-
-                    isActive
-                      ? "bg-[#eceeef] font-medium text-[#17191f]"
-                      : "font-normal text-[#31343b] hover:bg-[#f5f5f4]",
-                  ].join(" ")
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    {isActive && (
-                      <span className="absolute -left-4 h-7 w-[3px] bg-[#2f9076]" />
-                    )}
-
-                    <Icon
-                      size={18}
-                      strokeWidth={1.7}
-                      className={
-                        isActive
-                          ? "text-[#2f9076]"
-                          : "text-[#464a52]"
-                      }
-                    />
-
-                    <span>{item.name}</span>
-                  </>
-                )}
-              </NavLink>
-            );
-          })}
-        </nav>
-
-        {/* =================================================
-            DIVIDER
-        ================================================= */}
-
-        <div className="my-7 border-t border-[#e8e8e8]" />
-
-        {/* =================================================
-            CREATE
-        ================================================= */}
-
-        <p className="mb-4 px-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-[#a0a2a8]">
-          Create
+      {/* ACTIONS */}
+      <div className="mt-7 border-t border-[#EDF0EE] pt-6">
+        <p className="mb-3 px-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#9AA29E]">
+          Actions
         </p>
 
         <button
           type="button"
           onClick={() => navigate("/app/drafts/new")}
-          className=" mt-3 flex h-10 w-full items-center gap-3 rounded-[10px] bg-[#171a22] px-4 text-left text-sm font-medium text-white transition-colors hover:bg-[#262a34]"
+          className="flex h-11 w-full items-center justify-center gap-2.5 rounded-xl bg-[#173D35] px-4 text-[13px] font-semibold text-white transition-all hover:bg-[#205448] active:scale-[0.99]"
         >
-          <Plus size={18} strokeWidth={1.8} />
-
-          New Contract
+          <Plus size={17} strokeWidth={2} />
+          <span>New Contract</span>
         </button>
-
-        {/* Push bottom nav down */}
-
-        <div className="flex-1" />
-
-        {/* =================================================
-            BOTTOM NAV
-        ================================================= */}
-
-        <div className="border-t border-[#e8e8e8] pt-5">
-          <NavLink
-            to="/app/settings"
-            className={({ isActive }) =>
-              [
-                "flex h-11 items-center gap-3 rounded-[10px] px-3 text-sm transition-colors",
-
-                isActive
-                  ? "bg-[#f0f0ef] font-medium text-[#17191f]"
-                  : "text-[#4d5159] hover:bg-[#f5f5f4] hover:text-[#17191f]",
-              ].join(" ")
-            }
-          >
-            <Settings size={18} strokeWidth={1.7} />
-
-            Settings
-          </NavLink>
-
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="mt-1 flex h-11 w-full items-center gap-3 rounded-[10px] px-3 text-sm text-[#555963] transition-colors hover:bg-[#f5f5f4] hover:text-[#17191f]"
-          >
-            <LogOut size={18} strokeWidth={1.7} />
-
-            Log out
-          </button>
-        </div>
       </div>
-    </>
+
+      {/* Push bottom navigation to bottom */}
+      <div className="flex-1" />
+
+      {/* BOTTOM NAVIGATION */}
+      <div className="border-t border-[#ECEEED] pt-4">
+        <NavLink
+          to="/app/settings"
+          className={({ isActive }) =>
+            [
+              "group flex h-11 items-center gap-3 rounded-lg px-3 text-[13px] transition-colors",
+              isActive
+                ? "bg-[#F1F3F2] font-semibold text-[#181A1F]"
+                : "font-medium text-[#626965] hover:bg-[#F7F8F7] hover:text-[#181A1F]",
+            ].join(" ")
+          }
+        >
+          {({ isActive }) => (
+            <>
+              <Settings
+                size={17}
+                strokeWidth={isActive ? 1.9 : 1.7}
+                className={
+                  isActive
+                    ? "text-[#184C40]"
+                    : "text-[#7D8581] group-hover:text-[#4B5450]"
+                }
+              />
+
+              <span>Settings</span>
+            </>
+          )}
+        </NavLink>
+
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="group mt-1 flex h-11 w-full items-center gap-3 rounded-lg px-3 text-[13px] font-medium text-[#626965] transition-colors hover:bg-[#FFF5F4] hover:text-[#B44940]"
+        >
+          <LogOut
+            size={17}
+            strokeWidth={1.7}
+            className="text-[#7D8581] transition-colors group-hover:text-[#B44940]"
+          />
+
+          <span>Log out</span>
+        </button>
+      </div>
+    </div>
   );
 }
