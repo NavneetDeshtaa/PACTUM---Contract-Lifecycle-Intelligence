@@ -11,6 +11,7 @@ from app.models.approval_workflows import ApprovalWorkflow
 from app.services.Workflow.engine import (
     submit_for_approval, approve_current_stage, reject_current_stage, get_approval_status,
 )
+from app.services.Workflow.advisory_orchestrator import get_approval_advisory
 
 router = APIRouter(prefix="/contracts", tags=["workflow"])
 
@@ -111,6 +112,20 @@ def reject(
     try:
         reject_current_stage(db, contract_id, current_user.id, request.comment)
         return _to_status_response(get_approval_status(db, contract_id))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+class AdvisoryResponse(BaseModel):
+    recommendation: str
+    reasoning: str
+    current_stage: str
+
+
+@router.get("/{contract_id}/approval/advisory", response_model=AdvisoryResponse)
+def get_advisory(contract_id: uuid.UUID, db: Session = Depends(get_db)):
+    try:
+        return get_approval_advisory(db, contract_id)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
