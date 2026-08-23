@@ -1,11 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 
-import {
-  ArrowLeft,
-  CalendarDays,
-  FileText,
-  ShieldCheck,
-} from "lucide-react";
+import { ArrowLeft, CalendarDays, FileText, ShieldCheck } from "lucide-react";
 
 import { useContract } from "../hooks/useContract";
 
@@ -13,16 +8,14 @@ import ExtractedFieldsPanel from "../components/contracts/ExtractedFieldsPanel";
 import SummaryPanel from "../components/ui/SummaryPanel";
 import RiskPanel from "../components/contracts/RiskPanel";
 import ObligationsPanel from "../components/contracts/ObligationsPanel";
+import VersionDiffPanel from "../components/contracts/VersionDiffPanel";
+import ApprovalPanel from "../components/contracts/ApprovalPanel";
 
 export default function ContractDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const {
-    data: contract,
-    isLoading,
-    error,
-  } = useContract(id);
+  const { data: contract, isLoading, error } = useContract(id);
 
   /* =========================================================
      LOADING
@@ -69,8 +62,8 @@ export default function ContractDetailPage() {
               </h1>
 
               <p className="mt-1 max-w-sm text-[12px] leading-5 text-[#85888f]">
-                The contract may have been removed or you may not have access
-                to it.
+                The contract may have been removed or you may not have access to
+                it.
               </p>
 
               <button
@@ -92,13 +85,14 @@ export default function ContractDetailPage() {
      DATE
   ========================================================= */
 
-  const uploadedDate = new Date(
-    contract.uploaded_at,
-  ).toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  const uploadedDate = new Date(contract.uploaded_at).toLocaleDateString(
+    undefined,
+    {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    },
+  );
 
   return (
     <main className="min-h-full bg-white px-6 py-7 sm:px-8 lg:px-10">
@@ -117,7 +111,6 @@ export default function ContractDetailPage() {
             strokeWidth={1.7}
             className="transition-transform duration-150 group-hover:-translate-x-0.5"
           />
-
           Back to contracts
         </button>
 
@@ -164,7 +157,6 @@ export default function ContractDetailPage() {
                       strokeWidth={1.6}
                       className="text-[#9699a0]"
                     />
-
                     Uploaded {uploadedDate}
                   </span>
 
@@ -176,7 +168,6 @@ export default function ContractDetailPage() {
                       strokeWidth={1.7}
                       className="text-[#2f9076]"
                     />
-
                     AI analyzed
                   </span>
                 </div>
@@ -261,6 +252,13 @@ export default function ContractDetailPage() {
 
               <RiskPanel contractId={contract.id} />
             </section>
+
+            <div className="mt-6">
+              <ApprovalPanel contractId={contract.id} />
+            </div>
+            <div className="mt-6">
+              <VersionDiffPanel contractId={contract.id} />
+            </div>
           </div>
         </section>
       </div>
@@ -277,10 +275,7 @@ type SectionHeaderProps = {
   description: string;
 };
 
-function SectionHeader({
-  title,
-  description,
-}: SectionHeaderProps) {
+function SectionHeader({ title, description }: SectionHeaderProps) {
   return (
     <div className="mb-3">
       <h3 className="text-[13px] font-semibold tracking-[-0.01em] text-[#181a20]">
@@ -302,9 +297,7 @@ type ContractStatusProps = {
   status: string;
 };
 
-function ContractStatus({
-  status,
-}: ContractStatusProps) {
+function ContractStatus({ status }: ContractStatusProps) {
   const normalizedStatus = status.toLowerCase();
 
   const isReady =
@@ -314,8 +307,7 @@ function ContractStatus({
     normalizedStatus === "extracted";
 
   const isFailed =
-    normalizedStatus === "failed" ||
-    normalizedStatus === "error";
+    normalizedStatus === "failed" || normalizedStatus === "error";
 
   return (
     <span
@@ -329,11 +321,7 @@ function ContractStatus({
     >
       <span
         className={`h-1.5 w-1.5 rounded-full ${
-          isFailed
-            ? "bg-[#d24d4d]"
-            : isReady
-              ? "bg-[#2f9076]"
-              : "bg-[#b8953f]"
+          isFailed ? "bg-[#d24d4d]" : isReady ? "bg-[#2f9076]" : "bg-[#b8953f]"
         }`}
       />
 
