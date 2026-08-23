@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import auth, contracts, search, summary, risk, analytics, drafts, tracking, notifications, system
+from app.api import auth, contracts, search, summary, risk, analytics, drafts, tracking, notifications, system, workflow
 
 app = FastAPI(title="Contract Intelligence API")
 
@@ -25,4 +25,6 @@ app.include_router(tracking.router)
 app.include_router(tracking.upcoming_router)
 app.include_router(notifications.router)
 app.include_router(system.router)
+app.include_router(workflow.router)
+app.include_router(workflow.workflows_router)
 
