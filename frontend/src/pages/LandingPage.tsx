@@ -1,8 +1,24 @@
 import { useNavigate } from "react-router-dom";
 
+import {
+  Lightbulb,
+  FileSearch,
+  ListChecks,
+  ThumbsUp,
+  PenLine,
+  CheckSquare2,
+  Search,
+  Settings,
+  Sparkles,
+} from "lucide-react";
+
 import Navbar from "../components/landing/Navbar";
 import Footer from "../components/landing/Footer";
 import RedlineHero from "../components/landing/RedlineHero";
+
+/* ============================================================
+   FEATURES
+============================================================ */
 
 const featureGroups = [
   {
@@ -47,77 +63,43 @@ const featureGroups = [
   },
 ];
 
-const lifecycle = [
-  {
-    number: "01",
-    label: "CREATE",
-    description: "Generate from approved templates.",
-  },
-  {
-    number: "02",
-    label: "REVIEW",
-    description: "AI understands every clause.",
-  },
-  {
-    number: "03",
-    label: "APPROVE",
-    description: "Route through your teams.",
-  },
-  {
-    number: "04",
-    label: "SIGN",
-    description: "Finalize the agreement.",
-  },
-  {
-    number: "05",
-    label: "EXECUTE",
-    description: "Track what was agreed.",
-  },
-  {
-    number: "06",
-    label: "MONITOR",
-    description: "Watch obligations and dates.",
-  },
-  {
-    number: "07",
-    label: "RENEW",
-    description: "Never miss a renewal.",
-  },
-];
+/* ============================================================
+   LANDING PAGE
+============================================================ */
 
 export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-paper text-ink font-body overflow-hidden">
+    <div className="min-h-screen bg-white font-body text-ink">
       <Navbar />
 
-      <main>
+      {/* Navbar = 72px */}
+      <main className="pt-[72px]">
+
         {/* =====================================================
             HERO
         ===================================================== */}
 
-        <section className="relative bg-paper">
-          <div className="mx-auto max-w-7xl px-6 pt-7 pb-16 sm:pt-9 sm:pb-20 md:pt-10 md:pb-24">
-            
-            {/* Single centered hero container */}
+        <section
+          id="product"
+          className="relative scroll-mt-[72px] bg-white"
+        >
+          <div className="mx-auto max-w-7xl px-6 pb-16 pt-7 sm:pb-20 sm:pt-9 md:pb-24 md:pt-10">
             <div className="mx-auto w-full max-w-6xl text-center">
-              
-              {/* Eyebrow */}
               <p className="mb-5 text-sm font-medium tracking-wide text-brand md:text-base">
                 AI-Native Contract Intelligence
               </p>
 
-              {/* Main heading */}
               <h1 className="mx-auto w-full font-body text-5xl font-semibold leading-[0.98] tracking-[-0.055em] text-ink sm:text-6xl md:text-7xl lg:text-[84px]">
                 Turn every contract into
                 <br />
+
                 <span className="font-editorial font-normal text-brand">
                   business intelligence.
                 </span>
               </h1>
 
-              {/* Description */}
               <div className="mx-auto mt-7 w-full max-w-3xl">
                 <p className="text-center text-base leading-relaxed text-ink-soft md:text-lg">
                   PACTUM reads, understands, analyzes, and manages your
@@ -126,7 +108,6 @@ export default function LandingPage() {
                 </p>
               </div>
 
-              {/* CTA buttons */}
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <button
                   type="button"
@@ -153,7 +134,6 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Product visualization */}
             <div className="mt-12 sm:mt-14 md:mt-16">
               <RedlineHero />
             </div>
@@ -161,12 +141,13 @@ export default function LandingPage() {
         </section>
 
         {/* =====================================================
-            TRUST / PRODUCT STATEMENT
+            TRUST
         ===================================================== */}
 
         <section className="border-y border-border bg-white">
           <div className="mx-auto max-w-7xl px-6 py-14 md:py-16">
             <div className="grid items-center gap-10 md:grid-cols-3 md:gap-6">
+
               <div className="md:col-span-2">
                 <p className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-ink-muted">
                   Contract intelligence, without the manual work
@@ -174,6 +155,7 @@ export default function LandingPage() {
 
                 <h2 className="max-w-3xl text-3xl font-semibold leading-[1.05] tracking-[-0.04em] md:text-4xl lg:text-[46px]">
                   Your contracts already contain the answers.
+
                   <span className="text-ink-muted">
                     {" "}
                     PACTUM makes them accessible.
@@ -195,9 +177,10 @@ export default function LandingPage() {
             AI PRODUCT PREVIEW
         ===================================================== */}
 
-        <section className="bg-paper py-24 md:py-32">
+        <section className="bg-white py-24 md:py-32">
           <div className="mx-auto max-w-7xl px-6">
             <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+
               <div className="lg:col-span-5">
                 <p className="mb-5 font-mono text-xs uppercase tracking-[0.18em] text-brand">
                   AI Contract Understanding
@@ -206,6 +189,7 @@ export default function LandingPage() {
                 <h2 className="text-4xl font-semibold leading-[1.02] tracking-[-0.045em] md:text-5xl">
                   Don't just store contracts.
                   <br />
+
                   <span className="font-editorial font-normal text-brand">
                     Understand them.
                   </span>
@@ -236,10 +220,11 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              {/* Fake product UI */}
+              {/* PRODUCT MOCKUP */}
+
               <div className="lg:col-span-7">
                 <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-card">
-                  {/* Window header */}
+
                   <div className="flex h-12 items-center justify-between border-b border-border px-5">
                     <div className="flex items-center gap-2">
                       <span className="h-2 w-2 rounded-full bg-danger" />
@@ -248,12 +233,13 @@ export default function LandingPage() {
                     </div>
 
                     <div className="font-mono text-[11px] text-ink-muted">
-                      CLAUSE / CONTRACT
+                      PACTUM / CONTRACT
                     </div>
                   </div>
 
                   <div className="p-6 md:p-8">
                     <div className="mb-8 flex items-start justify-between gap-4">
+
                       <div>
                         <p className="mb-2 text-xs text-ink-muted">
                           MASTER SERVICE AGREEMENT
@@ -270,10 +256,12 @@ export default function LandingPage() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 border-b border-border pb-7 md:grid-cols-4">
+
                       <div>
                         <p className="mb-1 text-[11px] text-ink-muted">
                           CONTRACT VALUE
                         </p>
+
                         <p className="font-semibold">$2.4M</p>
                       </div>
 
@@ -281,6 +269,7 @@ export default function LandingPage() {
                         <p className="mb-1 text-[11px] text-ink-muted">
                           EFFECTIVE
                         </p>
+
                         <p className="font-semibold">Jan 12, 2026</p>
                       </div>
 
@@ -288,6 +277,7 @@ export default function LandingPage() {
                         <p className="mb-1 text-[11px] text-ink-muted">
                           RENEWAL
                         </p>
+
                         <p className="font-semibold">Jan 12, 2027</p>
                       </div>
 
@@ -295,11 +285,13 @@ export default function LandingPage() {
                         <p className="mb-1 text-[11px] text-ink-muted">
                           GOVERNING LAW
                         </p>
+
                         <p className="font-semibold">California</p>
                       </div>
                     </div>
 
                     <div className="mt-7 grid gap-7 md:grid-cols-2">
+
                       <div>
                         <div className="mb-4 flex items-center justify-between">
                           <p className="text-xs font-semibold uppercase tracking-wider">
@@ -312,6 +304,7 @@ export default function LandingPage() {
                         </div>
 
                         <div className="space-y-2.5">
+
                           <div className="flex items-center justify-between rounded-lg bg-danger-soft p-3">
                             <span className="text-xs font-medium">
                               Unlimited liability
@@ -350,6 +343,7 @@ export default function LandingPage() {
                         </p>
 
                         <div className="rounded-lg border border-ai/10 bg-ai-soft p-4">
+
                           <div className="flex gap-2">
                             <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-ai" />
 
@@ -378,76 +372,347 @@ export default function LandingPage() {
         </section>
 
         {/* =====================================================
-            LIFECYCLE
+            COMPACT CONTRACT LIFECYCLE
         ===================================================== */}
 
         <section
           id="how-it-works"
-          className="bg-ink py-24 text-paper md:py-32"
+          className="relative scroll-mt-[72px] overflow-hidden bg-white py-14 md:py-16 lg:py-16"
         >
-          <div className="mx-auto max-w-7xl px-6">
-            <div className="mx-auto mb-16 max-w-3xl text-center">
-              <p className="mb-5 font-mono text-xs uppercase tracking-[0.18em] text-brand">
+          <div className="mx-auto max-w-[1400px] px-6">
+
+            {/* =================================================
+                HEADING
+            ================================================= */}
+
+            <div className="mx-auto mb-8 max-w-3xl text-center md:mb-10">
+
+              <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-brand">
                 One intelligent lifecycle
               </p>
 
-              <h2 className="text-4xl font-semibold leading-[1] tracking-[-0.045em] md:text-5xl lg:text-6xl">
-                From first draft
+              <h2 className="text-3xl font-semibold leading-[1] tracking-[-0.045em] text-ink md:text-4xl lg:text-[46px]">
+                Every stage connected.
                 <br />
+
                 <span className="font-editorial font-normal text-brand">
-                  to final renewal.
+                  One intelligent system.
                 </span>
               </h2>
 
-              <p className="mx-auto mt-6 max-w-xl leading-relaxed text-paper/60">
-                PACTUM connects every stage of the contract lifecycle so your
-                teams always know what happened, what changed, and what needs
-                attention next.
+              <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-ink-soft">
+                PACTUM brings creation, review, approvals, execution,
+                obligations, analytics, and optimization into one continuous
+                contract lifecycle.
               </p>
             </div>
 
-            {/* Lifecycle */}
-            <div className="relative mx-auto max-w-5xl">
-              <div className="absolute inset-x-16 top-1/2 hidden h-px bg-paper/10 md:block" />
+            {/* =================================================
+                DESKTOP COMPACT LOOP
+            ================================================= */}
 
-              <div className="relative grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-7">
-                {lifecycle.map((item, index) => (
-                  <div
-                    key={item.number}
-                    className="group relative text-center"
+            <div className="relative mx-auto hidden h-[455px] max-w-[1080px] lg:block">
+
+              {/* =================================================
+                  CONNECTING LINES
+              ================================================= */}
+
+              <svg
+                className="pointer-events-none absolute inset-0 h-full w-full"
+                viewBox="0 0 1080 455"
+                fill="none"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <defs>
+                  <marker
+                    id="lifecycleArrowCompact"
+                    markerWidth="7"
+                    markerHeight="7"
+                    refX="5.5"
+                    refY="3.5"
+                    orient="auto"
                   >
-                    <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-paper/10 bg-paper/[0.06] transition-all duration-300 group-hover:border-brand/60 group-hover:bg-brand/10">
-                      <span className="font-mono text-[11px] text-brand">
-                        {item.number}
-                      </span>
-                    </div>
+                    <path
+                      d="M0 0L7 3.5L0 7"
+                      fill="none"
+                      stroke="#D9AE78"
+                      strokeWidth="1.4"
+                    />
+                  </marker>
+                </defs>
 
-                    <p className="mb-2 font-mono text-xs tracking-[0.16em] text-paper">
-                      {item.label}
-                    </p>
+                {/* Create -> Research */}
 
-                    <p className="text-xs leading-relaxed text-paper/45">
-                      {item.description}
-                    </p>
+                <path
+                  d="M85 215
+                     C85 145 125 80 230 72"
+                  stroke="#D9AE78"
+                  strokeWidth="1.5"
+                  markerEnd="url(#lifecycleArrowCompact)"
+                />
 
-                    {index < lifecycle.length - 1 && (
-                      <span className="absolute -right-5 top-8 hidden text-paper/20 lg:block">
-                        →
-                      </span>
-                    )}
-                  </div>
-                ))}
+                {/* Research -> Review */}
+
+                <path
+                  d="M285 72 L475 72"
+                  stroke="#D9AE78"
+                  strokeWidth="1.5"
+                  markerEnd="url(#lifecycleArrowCompact)"
+                />
+
+                {/* Review -> Approve */}
+
+                <path
+                  d="M595 72 L785 72"
+                  stroke="#D9AE78"
+                  strokeWidth="1.5"
+                  markerEnd="url(#lifecycleArrowCompact)"
+                />
+
+                {/* Approve -> Execute */}
+
+                <path
+                  d="M845 72
+                     C955 78 995 140 995 215"
+                  stroke="#D9AE78"
+                  strokeWidth="1.5"
+                  markerEnd="url(#lifecycleArrowCompact)"
+                />
+
+                {/* Execute -> Fulfill */}
+
+                <path
+                  d="M995 255
+                     C995 330 955 375 855 382"
+                  stroke="#D9AE78"
+                  strokeWidth="1.5"
+                  markerEnd="url(#lifecycleArrowCompact)"
+                />
+
+                {/* Fulfill -> Analyze */}
+
+                <path
+                  d="M795 382 L600 382"
+                  stroke="#D9AE78"
+                  strokeWidth="1.5"
+                  markerEnd="url(#lifecycleArrowCompact)"
+                />
+
+                {/* Analyze -> Optimize */}
+
+                <path
+                  d="M480 382 L285 382"
+                  stroke="#D9AE78"
+                  strokeWidth="1.5"
+                  markerEnd="url(#lifecycleArrowCompact)"
+                />
+
+                {/* Optimize -> Create */}
+
+                <path
+                  d="M225 382
+                     C125 375 85 325 85 260"
+                  stroke="#D9AE78"
+                  strokeWidth="1.5"
+                  markerEnd="url(#lifecycleArrowCompact)"
+                />
+              </svg>
+
+              {/* =================================================
+                  CREATE
+              ================================================= */}
+
+              <LifecycleStage
+                className="absolute left-0 top-[42%]"
+                label="CREATE"
+                icon={<Lightbulb size={25} strokeWidth={1.6} />}
+                color="text-[#F26944]"
+                labelPosition="right"
+              />
+
+              {/* =================================================
+                  RESEARCH
+              ================================================= */}
+
+              <LifecycleStage
+                className="absolute left-[18%] top-0"
+                label="RESEARCH"
+                icon={<FileSearch size={25} strokeWidth={1.6} />}
+                color="text-ai"
+              />
+
+              {/* =================================================
+                  REVIEW
+              ================================================= */}
+
+              <LifecycleStage
+                className="absolute left-1/2 top-0 -translate-x-1/2"
+                label="REVIEW"
+                icon={<ListChecks size={26} strokeWidth={1.6} />}
+                color="text-ai"
+              />
+
+              {/* =================================================
+                  APPROVE
+              ================================================= */}
+
+              <LifecycleStage
+                className="absolute right-[18%] top-0"
+                label="APPROVE"
+                icon={<ThumbsUp size={25} strokeWidth={1.6} />}
+                color="text-ai"
+              />
+
+              {/* =================================================
+                  EXECUTE
+              ================================================= */}
+
+              <LifecycleStage
+                className="absolute right-0 top-[42%]"
+                label="EXECUTE"
+                icon={<PenLine size={25} strokeWidth={1.6} />}
+                color="text-[#F26944]"
+                labelPosition="left"
+              />
+
+              {/* =================================================
+                  FULFILL
+              ================================================= */}
+
+              <LifecycleStage
+                className="absolute bottom-0 right-[18%]"
+                label="FULFILL"
+                icon={<CheckSquare2 size={25} strokeWidth={1.6} />}
+                color="text-brand"
+                bottom
+              />
+
+              {/* =================================================
+                  ANALYZE
+              ================================================= */}
+
+              <LifecycleStage
+                className="absolute bottom-0 left-1/2 -translate-x-1/2"
+                label="ANALYZE"
+                icon={<Search size={25} strokeWidth={1.6} />}
+                color="text-brand"
+                bottom
+              />
+
+              {/* =================================================
+                  OPTIMIZE
+              ================================================= */}
+
+              <LifecycleStage
+                className="absolute bottom-0 left-[18%]"
+                label="OPTIMIZE"
+                icon={<Settings size={25} strokeWidth={1.6} />}
+                color="text-brand"
+                bottom
+              />
+
+              {/* =================================================
+                  CENTER AI
+              ================================================= */}
+
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div className="group flex items-center gap-3 rounded-full bg-[#F3F3F1] px-7 py-4 transition-all duration-300 hover:bg-[#ECECE9] hover:shadow-soft">
+
+                  <Sparkles
+                    size={28}
+                    strokeWidth={1.7}
+                    className="text-ink"
+                  />
+
+                  <span className="whitespace-nowrap text-[22px] font-semibold tracking-[-0.035em] text-ink">
+                    PACTUM AI
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="mt-16 flex justify-center">
-              <div className="inline-flex items-center gap-3 rounded-full border border-paper/10 bg-paper/[0.04] px-6 py-3">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-brand" />
+            {/* =================================================
+                TABLET / MOBILE
+            ================================================= */}
 
-                <span className="text-xs text-paper/70">
-                  PACTUM AI works across every stage
+            <div className="mx-auto grid max-w-3xl grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 lg:hidden">
+
+              <MobileLifecycleStage
+                label="CREATE"
+                icon={<Lightbulb size={23} strokeWidth={1.6} />}
+                color="text-[#F26944]"
+              />
+
+              <MobileLifecycleStage
+                label="RESEARCH"
+                icon={<FileSearch size={23} strokeWidth={1.6} />}
+                color="text-ai"
+              />
+
+              <MobileLifecycleStage
+                label="REVIEW"
+                icon={<ListChecks size={23} strokeWidth={1.6} />}
+                color="text-ai"
+              />
+
+              <MobileLifecycleStage
+                label="APPROVE"
+                icon={<ThumbsUp size={23} strokeWidth={1.6} />}
+                color="text-ai"
+              />
+
+              <MobileLifecycleStage
+                label="EXECUTE"
+                icon={<PenLine size={23} strokeWidth={1.6} />}
+                color="text-[#F26944]"
+              />
+
+              <MobileLifecycleStage
+                label="FULFILL"
+                icon={<CheckSquare2 size={23} strokeWidth={1.6} />}
+                color="text-brand"
+              />
+
+              <MobileLifecycleStage
+                label="ANALYZE"
+                icon={<Search size={23} strokeWidth={1.6} />}
+                color="text-brand"
+              />
+
+              <MobileLifecycleStage
+                label="OPTIMIZE"
+                icon={<Settings size={23} strokeWidth={1.6} />}
+                color="text-brand"
+              />
+            </div>
+
+            {/* Mobile AI */}
+
+            <div className="mt-10 flex justify-center lg:hidden">
+              <div className="inline-flex items-center gap-3 rounded-full bg-[#F3F3F1] px-6 py-3.5">
+                <Sparkles size={21} strokeWidth={1.7} />
+
+                <span className="text-sm font-semibold tracking-[-0.025em]">
+                  PACTUM AI
                 </span>
               </div>
+            </div>
+
+            {/* CTA */}
+
+            <div className="mt-10 flex justify-center lg:mt-3">
+              <button
+                type="button"
+                onClick={() => navigate("/login")}
+                className="group inline-flex items-center gap-3 rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+              >
+                Explore PACTUM
+
+                <span className="text-lg leading-none transition-transform duration-200 group-hover:translate-x-1">
+                  →
+                </span>
+              </button>
             </div>
           </div>
         </section>
@@ -456,8 +721,12 @@ export default function LandingPage() {
             FEATURES
         ===================================================== */}
 
-        <section id="features" className="bg-white py-24 md:py-32">
+        <section
+          id="features"
+          className="scroll-mt-[72px] border-t border-border bg-white py-24 md:py-32"
+        >
           <div className="mx-auto max-w-7xl px-6">
+
             <div className="mb-16 max-w-3xl">
               <p className="mb-5 font-mono text-xs uppercase tracking-[0.18em] text-brand">
                 Built for the entire contract lifecycle
@@ -466,6 +735,7 @@ export default function LandingPage() {
               <h2 className="text-4xl font-semibold leading-[1] tracking-[-0.045em] md:text-5xl lg:text-6xl">
                 One workspace.
                 <br />
+
                 <span className="font-editorial font-normal text-brand">
                   Every contract.
                 </span>
@@ -473,10 +743,11 @@ export default function LandingPage() {
             </div>
 
             <div className="divide-y divide-border border-y border-border">
+
               {featureGroups.map((group) => (
                 <div
                   key={group.number}
-                  className="group grid gap-8 py-12 lg:grid-cols-12 lg:gap-16 md:py-16"
+                  className="group grid gap-8 py-12 md:py-16 lg:grid-cols-12 lg:gap-16"
                 >
                   <div className="lg:col-span-2">
                     <span className="font-mono text-xs text-ink-muted">
@@ -503,7 +774,7 @@ export default function LandingPage() {
                       {group.items.map((item) => (
                         <span
                           key={item}
-                          className="rounded-full border border-border bg-paper px-3 py-1.5 text-xs font-medium"
+                          className="rounded-full border border-border bg-white px-3 py-1.5 text-xs font-medium"
                         >
                           {item}
                         </span>
@@ -517,12 +788,14 @@ export default function LandingPage() {
         </section>
 
         {/* =====================================================
-            ANALYTICS / PORTFOLIO INTELLIGENCE
+            ANALYTICS
         ===================================================== */}
 
-        <section className="bg-paper py-24 md:py-32">
+        <section className="bg-white py-24 md:py-32">
           <div className="mx-auto max-w-7xl px-6">
+
             <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+
               <div>
                 <p className="mb-5 font-mono text-xs uppercase tracking-[0.18em] text-brand">
                   Portfolio Intelligence
@@ -547,15 +820,18 @@ export default function LandingPage() {
                 </button>
               </div>
 
-              {/* Analytics visualization */}
               <div className="rounded-2xl border border-border bg-white p-6 shadow-soft md:p-8">
+
                 <div className="mb-8 flex items-center justify-between">
+
                   <div>
                     <p className="text-xs uppercase tracking-wider text-ink-muted">
                       Contract Portfolio
                     </p>
 
-                    <p className="mt-1 text-2xl font-semibold">$48.6M</p>
+                    <p className="mt-1 text-2xl font-semibold">
+                      $48.6M
+                    </p>
                   </div>
 
                   <span className="rounded-full bg-success-soft px-2.5 py-1 text-xs font-semibold text-success">
@@ -564,28 +840,45 @@ export default function LandingPage() {
                 </div>
 
                 <div className="flex h-40 items-end gap-3">
-                  {[38, 55, 46, 72, 64, 82, 68, 92, 76, 100, 84, 96].map(
-                    (height, index) => (
+
+                  {[
+                    38,
+                    55,
+                    46,
+                    72,
+                    64,
+                    82,
+                    68,
+                    92,
+                    76,
+                    100,
+                    84,
+                    96,
+                  ].map((height, index) => (
+                    <div
+                      key={index}
+                      className="flex h-full flex-1 items-end"
+                    >
                       <div
-                        key={index}
-                        className="flex h-full flex-1 items-end"
-                      >
-                        <div
-                          className="w-full rounded-t-sm bg-brand/15 transition-colors hover:bg-brand/40"
-                          style={{ height: `${height}%` }}
-                        />
-                      </div>
-                    ),
-                  )}
+                        className="w-full rounded-t-sm bg-brand/15 transition-colors hover:bg-brand/40"
+                        style={{
+                          height: `${height}%`,
+                        }}
+                      />
+                    </div>
+                  ))}
                 </div>
 
                 <div className="mt-7 grid grid-cols-3 gap-4 border-t border-border pt-6">
+
                   <div>
                     <p className="text-[10px] uppercase tracking-wider text-ink-muted">
                       Active
                     </p>
 
-                    <p className="mt-1 text-lg font-semibold">1,284</p>
+                    <p className="mt-1 text-lg font-semibold">
+                      1,284
+                    </p>
                   </div>
 
                   <div>
@@ -593,7 +886,9 @@ export default function LandingPage() {
                       Renewing
                     </p>
 
-                    <p className="mt-1 text-lg font-semibold">42</p>
+                    <p className="mt-1 text-lg font-semibold">
+                      42
+                    </p>
                   </div>
 
                   <div>
@@ -617,6 +912,7 @@ export default function LandingPage() {
 
         <section className="bg-ink text-paper">
           <div className="mx-auto max-w-5xl px-6 py-24 text-center md:py-32">
+
             <p className="mb-6 font-mono text-xs uppercase tracking-[0.18em] text-brand">
               Contract intelligence starts here
             </p>
@@ -624,6 +920,7 @@ export default function LandingPage() {
             <h2 className="text-4xl font-semibold leading-[0.98] tracking-[-0.05em] md:text-6xl lg:text-7xl">
               Stop managing contracts.
               <br />
+
               <span className="font-editorial font-normal text-brand">
                 Start understanding them.
               </span>
@@ -650,6 +947,139 @@ export default function LandingPage() {
       </main>
 
       <Footer />
+    </div>
+  );
+}
+
+/* ============================================================
+   DESKTOP LIFECYCLE STAGE
+============================================================ */
+
+type LifecycleStageProps = {
+  label: string;
+  icon: React.ReactNode;
+  color: string;
+  className?: string;
+  labelPosition?: "top" | "left" | "right";
+  bottom?: boolean;
+};
+
+function LifecycleStage({
+  label,
+  icon,
+  color,
+  className = "",
+  labelPosition = "top",
+  bottom = false,
+}: LifecycleStageProps) {
+
+  if (labelPosition === "right") {
+    return (
+      <div className={`flex items-center gap-4 ${className}`}>
+
+        <div
+          className={[
+            "flex h-[68px] w-[68px] items-center justify-center rounded-full",
+            "bg-[#F3F3F1]",
+            "transition-all duration-300",
+            "hover:-translate-y-1 hover:shadow-soft",
+            color,
+          ].join(" ")}
+        >
+          {icon}
+        </div>
+
+        <p className="font-mono text-[14px] font-medium tracking-[0.16em] text-ink">
+          {label}
+        </p>
+      </div>
+    );
+  }
+
+  if (labelPosition === "left") {
+    return (
+      <div className={`flex items-center gap-4 ${className}`}>
+
+        <p className="font-mono text-[14px] font-medium tracking-[0.16em] text-ink">
+          {label}
+        </p>
+
+        <div
+          className={[
+            "flex h-[68px] w-[68px] items-center justify-center rounded-full",
+            "bg-[#F3F3F1]",
+            "transition-all duration-300",
+            "hover:-translate-y-1 hover:shadow-soft",
+            color,
+          ].join(" ")}
+        >
+          {icon}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`flex w-[125px] flex-col items-center ${className}`}>
+
+      {bottom && (
+        <p className="mb-3 font-mono text-[14px] font-medium tracking-[0.16em] text-ink">
+          {label}
+        </p>
+      )}
+
+      <div
+        className={[
+          "flex h-[68px] w-[68px] items-center justify-center rounded-full",
+          "bg-[#F3F3F1]",
+          "transition-all duration-300",
+          "hover:-translate-y-1 hover:shadow-soft",
+          color,
+        ].join(" ")}
+      >
+        {icon}
+      </div>
+
+      {!bottom && (
+        <p className="mt-3 font-mono text-[14px] font-medium tracking-[0.16em] text-ink">
+          {label}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/* ============================================================
+   MOBILE LIFECYCLE
+============================================================ */
+
+type MobileLifecycleStageProps = {
+  label: string;
+  icon: React.ReactNode;
+  color: string;
+};
+
+function MobileLifecycleStage({
+  label,
+  icon,
+  color,
+}: MobileLifecycleStageProps) {
+  return (
+    <div className="flex flex-col items-center text-center">
+
+      <div
+        className={[
+          "flex h-14 w-14 items-center justify-center rounded-full",
+          "bg-[#F3F3F1]",
+          color,
+        ].join(" ")}
+      >
+        {icon}
+      </div>
+
+      <p className="mt-3 font-mono text-[10px] font-medium tracking-[0.14em] text-ink">
+        {label}
+      </p>
     </div>
   );
 }

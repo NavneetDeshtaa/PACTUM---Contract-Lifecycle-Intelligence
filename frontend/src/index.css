@@ -1,53 +1,84 @@
 @import "tailwindcss";
 
 @theme {
+
   /* =========================================================
      COLOR SYSTEM
      ========================================================= */
 
   /* Page backgrounds */
-  --color-paper: #F7F7F5;
-  --color-paper-dark: #F0F0ED;
+
+  --color-paper: #FFFFFF;
+
+  --color-paper-dark: #FFFFFF;
+
   --color-surface: #FFFFFF;
-  --color-surface-soft: #FAFAF8;
+
+  --color-surface-soft: #FAFAFA;
+
 
   /* Primary text */
+
   --color-ink: #171B26;
+
   --color-ink-soft: #59606D;
+
   --color-ink-muted: #858B95;
 
+
   /* Borders */
+
   --color-border: #E7E7E3;
+
   --color-border-strong: #D8D9D5;
 
+
   /* Brand */
+
   --color-brand: #2E8F78;
+
   --color-brand-dark: #247663;
+
   --color-brand-soft: #E8F4F0;
 
+
   /* AI */
+
   --color-ai: #7661B8;
+
   --color-ai-dark: #604C9F;
+
   --color-ai-soft: #F0ECF9;
 
+
   /* Contract / legal status */
+
   --color-success: #2F8A68;
+
   --color-success-soft: #EAF6F0;
 
   --color-warning: #B7791F;
+
   --color-warning-soft: #FFF5E3;
 
   --color-danger: #C34B4B;
+
   --color-danger-soft: #FBECEC;
 
   --color-info: #4779A8;
+
   --color-info-soft: #ECF3FA;
 
+
   /* Redlining */
+
   --color-redline: #C34B4B;
+
   --color-insert: #2F8A68;
 
+
   /* Editorial accent */
+
   --color-gold: #B98A2B;
 
 
@@ -56,7 +87,9 @@
      ========================================================= */
 
   --font-display: "Fraunces", Georgia, serif;
+
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 
 
@@ -65,10 +98,15 @@
      ========================================================= */
 
   --radius-xs: 4px;
+
   --radius-sm: 6px;
+
   --radius-md: 10px;
+
   --radius-lg: 14px;
+
   --radius-xl: 20px;
+
   --radius-2xl: 28px;
 
 
@@ -96,6 +134,7 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #FFFFFF;
 }
 
 body {
@@ -104,11 +143,18 @@ body {
 
   font-family: var(--font-body);
 
-  background-color: var(--color-paper);
+  background-color: #FFFFFF;
+
   color: var(--color-ink);
 
   -webkit-font-smoothing: antialiased;
+
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  background-color: #FFFFFF;
 }
 
 
@@ -123,7 +169,9 @@ h4,
 h5,
 h6 {
   margin: 0;
+
   color: var(--color-ink);
+
   letter-spacing: -0.025em;
 }
 
@@ -145,7 +193,8 @@ select {
 
 ::selection {
   background-color: var(--color-brand);
-  color: #ffffff;
+
+  color: #FFFFFF;
 }
 
 
@@ -155,6 +204,7 @@ select {
 
 ::-webkit-scrollbar {
   width: 8px;
+
   height: 8px;
 }
 
@@ -164,6 +214,7 @@ select {
 
 ::-webkit-scrollbar-thumb {
   background: #C9CBC7;
+
   border-radius: 999px;
 }
 
@@ -178,6 +229,7 @@ select {
 
 :focus-visible {
   outline: 2px solid var(--color-brand);
+
   outline-offset: 3px;
 }
 
@@ -188,6 +240,7 @@ select {
 
 a {
   color: inherit;
+
   text-decoration: none;
 }
 
@@ -206,12 +259,15 @@ a {
 
 .font-editorial {
   font-family: var(--font-display);
+
   font-style: italic;
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.82);
+
   backdrop-filter: blur(16px);
+
   -webkit-backdrop-filter: blur(16px);
 }
 
@@ -226,19 +282,22 @@ a {
 
 /* =========================================================
    SUBTLE GRID BACKGROUND
+
    Useful for AI/product visualization sections
    ========================================================= */
 
 .bg-grid {
+  background-color: #FFFFFF;
+
   background-image:
     linear-gradient(
       to right,
-      rgba(23, 27, 38, 0.045) 1px,
+      rgba(23, 27, 38, 0.035) 1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      rgba(23, 27, 38, 0.045) 1px,
+      rgba(23, 27, 38, 0.035) 1px,
       transparent 1px
     );
 
@@ -253,11 +312,13 @@ a {
 @keyframes fade-up {
   from {
     opacity: 0;
+
     transform: translateY(16px);
   }
 
   to {
     opacity: 1;
+
     transform: translateY(0);
   }
 }
@@ -301,6 +362,7 @@ a {
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   html {
     scroll-behavior: auto;
   }
@@ -309,8 +371,11 @@ a {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+
     animation-iteration-count: 1 !important;
+
     transition-duration: 0.01ms !important;
+
     scroll-behavior: auto !important;
   }
 }

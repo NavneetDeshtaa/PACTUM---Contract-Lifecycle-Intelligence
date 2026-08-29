@@ -4,20 +4,17 @@ import {
   ChevronDown,
   FileText,
   Plus,
-  Search,
   SlidersHorizontal,
 } from "lucide-react";
 
 import { useContracts } from "../hooks/useContracts";
 import ContractTable from "../components/contracts/ContractTable";
 import UploadContractModal from "../components/contracts/UploadContractModal";
-import AIContractSearchModal from "../components/ui/AIContractSearchModal";
 
 export default function ContractListPage() {
   const { data: contracts, isLoading, error } = useContracts();
 
   const [uploadOpen, setUploadOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
 
   const contractCount = contracts?.length ?? 0;
 
@@ -74,16 +71,6 @@ export default function ContractListPage() {
             All filters
 
             <SlidersHorizontal size={14} strokeWidth={1.8} />
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setSearchOpen(true)}
-            aria-label="Search contracts with AI"
-            title="Search contracts with AI"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#dddddd] bg-white text-[#30333a] transition-colors hover:border-[#c7c7c7] hover:bg-[#f7f7f6]"
-          >
-            <Search size={15} strokeWidth={1.9} />
           </button>
         </div>
 
@@ -184,15 +171,6 @@ export default function ContractListPage() {
       <UploadContractModal
         open={uploadOpen}
         onClose={() => setUploadOpen(false)}
-      />
-
-      {/* =====================================================
-          AI SEARCH MODAL
-      ===================================================== */}
-
-      <AIContractSearchModal
-        open={searchOpen}
-        onClose={() => setSearchOpen(false)}
       />
     </main>
   );

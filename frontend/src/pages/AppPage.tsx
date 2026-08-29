@@ -14,6 +14,7 @@ import {
   CheckCircle2,
   Sparkles,
   Plus,
+  Search,
 } from "lucide-react";
 
 import {
@@ -24,6 +25,8 @@ import {
 } from "react-router-dom";
 
 import NotificationBell from "../components/notifications/NotificationBell";
+import AIContractSearchModal from "../components/ui/AIContractSearchModal";
+
 import { tokenStorage } from "../lib/tokenStorage";
 
 /* ============================================================
@@ -190,6 +193,7 @@ export default function AppPage() {
   const location = useLocation();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   /* ==========================================================
      ACTIVE SECTION
@@ -345,16 +349,76 @@ export default function AppPage() {
                   <NotificationBell />
                 </div>
               </div>
+
+              {/* ===============================================
+                  AI SEARCH
+              =============================================== */}
+
+              <button
+                type="button"
+                onClick={() => setSearchOpen(true)}
+                aria-label="Search contracts with AI"
+                title="Search contracts with AI"
+                className="
+                  group
+                  -ml-5
+                  flex
+                  h-9
+                  w-[230px]
+                  items-center
+                  gap-2.5
+                  rounded-lg
+                  border
+                  border-[#E1E4E2]
+                  bg-[#FAFBFA]
+                  px-3
+                  text-left
+                  transition-all
+                  duration-200
+                  hover:border-[#C8CECB]
+                  hover:bg-white
+                  hover:shadow-[0_1px_3px_rgba(0,0,0,0.04)]
+                  focus:outline-none
+                  focus:ring-2
+                  focus:ring-[#184C40]/10
+                  xl:w-[270px]
+                "
+              >
+                <Search
+                  size={15}
+                  strokeWidth={1.9}
+                  className="shrink-0 text-[#727A76] transition-colors group-hover:text-[#184C40]"
+                />
+
+                <span className="truncate text-[12px] font-medium text-[#858D89]">
+                  Ask about your contracts...
+                </span>
+              </button>
             </nav>
 
             {/* =================================================
-                MOBILE NOTIFICATION
+                MOBILE ACTIONS
             ================================================= */}
 
-            <div className="ml-auto lg:hidden">
+            <div className="ml-auto flex items-center gap-2 lg:hidden">
+
+              {/* Notification */}
+
               <div className="flex h-9 w-9 items-center justify-center rounded-lg hover:bg-[#F5F6F5]">
                 <NotificationBell />
               </div>
+
+              {/* Search */}
+
+              <button
+                type="button"
+                onClick={() => setSearchOpen(true)}
+                aria-label="Search contracts with AI"
+                title="Search contracts with AI"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#E1E4E2] bg-white text-[#545B57] transition-colors hover:border-[#C8CECB] hover:bg-[#F5F6F5] hover:text-[#184C40]"
+              >
+                <Search size={16} strokeWidth={1.9} />
+              </button>
             </div>
           </div>
 
@@ -474,6 +538,15 @@ export default function AppPage() {
             <Outlet />
           </main>
         </div>
+
+        {/* =====================================================
+            AI CONTRACT SEARCH MODAL
+        ===================================================== */}
+
+        <AIContractSearchModal
+          open={searchOpen}
+          onClose={() => setSearchOpen(false)}
+        />
       </div>
     </div>
   );
@@ -491,7 +564,9 @@ function ContextSidebar({
 
   return (
     <div className="flex min-h-0 flex-1 flex-col px-4 py-6">
+
       {/* NAVIGATION */}
+
       <nav className="space-y-1">
         {navigation.map((item) => {
           const Icon = item.icon;
@@ -531,6 +606,7 @@ function ContextSidebar({
       </nav>
 
       {/* ACTIONS */}
+
       <div className="mt-7 border-t border-[#EDF0EE] pt-6">
         <p className="mb-3 px-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#9AA29E]">
           Actions
@@ -542,14 +618,17 @@ function ContextSidebar({
           className="flex h-11 w-full items-center justify-center gap-2.5 rounded-xl bg-[#173D35] px-4 text-[13px] font-semibold text-white transition-all hover:bg-[#205448] active:scale-[0.99]"
         >
           <Plus size={17} strokeWidth={2} />
+
           <span>New Contract</span>
         </button>
       </div>
 
       {/* Push bottom navigation to bottom */}
+
       <div className="flex-1" />
 
       {/* BOTTOM NAVIGATION */}
+
       <div className="border-t border-[#ECEEED] pt-4">
         <NavLink
           to="/app/settings"

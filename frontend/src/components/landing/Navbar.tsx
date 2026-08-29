@@ -43,9 +43,23 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border bg-paper/90 backdrop-blur-xl">
+    <nav
+      className="
+        fixed
+        left-0
+        right-0
+        top-0
+        z-[100]
+        w-full
+        border-b
+        border-border
+        bg-white/95
+        backdrop-blur-xl
+      "
+    >
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex h-[72px] items-center justify-between">
+
           {/* =====================================================
               LOGO
           ===================================================== */}
@@ -54,7 +68,7 @@ export default function Navbar() {
             type="button"
             onClick={() => navigate("/")}
             className="group flex shrink-0 items-center gap-3"
-            aria-label="Clause home"
+            aria-label="Pactum home"
           >
             <span className="relative flex h-8 w-8 items-center justify-center">
               <span className="absolute inset-0 rounded-[9px] bg-brand transition-transform duration-200 group-hover:rotate-3" />
@@ -74,6 +88,7 @@ export default function Navbar() {
           ===================================================== */}
 
           <div className="ml-12 mr-auto hidden items-center gap-9 lg:flex">
+
             {/* Product */}
 
             <button
@@ -128,6 +143,7 @@ export default function Navbar() {
           ===================================================== */}
 
           <div className="hidden items-center gap-3 md:flex">
+
             {/* Login */}
 
             <button
@@ -199,6 +215,7 @@ export default function Navbar() {
         >
           <div className="border-t border-border pt-3">
             <div className="flex flex-col">
+
               {/* Product */}
 
               <button
@@ -253,6 +270,7 @@ export default function Navbar() {
             ================================================= */}
 
             <div className="mt-4 grid grid-cols-2 gap-3 border-t border-border pt-5">
+
               {/* Login */}
 
               <button
