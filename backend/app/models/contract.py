@@ -1,6 +1,6 @@
 import uuid
 import enum
-from sqlalchemy import Column, String, Enum, DateTime, ForeignKey, Text
+from sqlalchemy import Column, String, Enum, DateTime, ForeignKey, Text, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -12,6 +12,13 @@ class ContractStatus(str, enum.Enum):
     extracted = "extracted"
     failed = "failed"
 
+class LifecycleStatus(str, enum.Enum):
+    draft = "draft"
+    active = "active"
+    executed = "executed"
+    expired = "expired"
+    terminated = "terminated"
+
 class Contract(Base):
     __tablename__ = "contracts"
 
@@ -21,6 +28,14 @@ class Contract(Base):
     uploaded_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
     status = Column(Enum(ContractStatus), default=ContractStatus.uploaded, nullable=False)
     uploaded_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    # --- Sub-tab fields ---
+    is_starred = Column(Boolean, default=False, nullable=False)
+    lifecycle_status = Column(
+        Enum(LifecycleStatus),
+        default=LifecycleStatus.draft,
+        nullable=False,
+    )
 
     # NEW: caches the full parsed text (from text_extraction.py) so downstream
     # steps -- chunking here, and the summarizer in Step 4 -- never need to

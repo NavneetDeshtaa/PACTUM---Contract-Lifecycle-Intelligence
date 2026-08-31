@@ -12,7 +12,8 @@ import {
   Star,
   CalendarCheck,
   CheckCircle2,
-  Sparkles,
+  AlertCircle,
+  ShieldAlert,
   Plus,
   Search,
 } from "lucide-react";
@@ -113,6 +114,12 @@ const obligationNavigation = [
   {
     name: "Overdue",
     path: "/app/obligations/overdue",
+    icon: AlertCircle,
+    end: true,
+  },
+  {
+    name: "Completed",
+    path: "/app/obligations/completed",
     icon: CheckCircle2,
     end: true,
   },
@@ -163,7 +170,7 @@ const insightsNavigation = [
   {
     name: "Risk analytics",
     path: "/app/analytics/risk",
-    icon: Sparkles,
+    icon: ShieldAlert,
     end: true,
   },
 ];

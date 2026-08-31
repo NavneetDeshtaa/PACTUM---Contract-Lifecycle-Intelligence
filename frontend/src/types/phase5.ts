@@ -21,6 +21,38 @@ export interface ApprovalWorkflowOption {
   name: string;
   contract_type: string | null;
   stages: string[];
+  active?: boolean;
+  active_instances_count?: number;
+}
+
+export interface CreateWorkflowInput {
+  name: string;
+  contract_type?: string;
+  stages: string[];
+}
+
+export interface ActiveWorkflowInstance {
+  instance_id: string;
+  contract_id: string;
+  contract_file_name: string;
+  workflow_id: string;
+  workflow_name: string;
+  current_stage_index: number;
+  current_stage_name: string | null;
+  total_stages: number;
+  stages: string[];
+  status: "in_progress" | "approved" | "rejected";
+  started_at: string;
+  completed_at: string | null;
+  actions: ActionHistoryItem[];
+}
+
+export interface WorkflowStats {
+  total_workflows: number;
+  total_templates: number;
+  active_in_progress: number;
+  total_approved: number;
+  total_rejected: number;
 }
 
 export interface AdvisoryResponse {

@@ -4,6 +4,15 @@ export interface ContractTemplate {
   contract_type: string;
   description: string | null;
   clause_outline: string[];
+  generation_instructions?: string | null;
+}
+
+export interface CreateTemplateInput {
+  name: string;
+  contract_type: string;
+  description?: string;
+  clause_outline: string[];
+  generation_instructions?: string;
 }
 
 export interface DraftGenerationRequest {

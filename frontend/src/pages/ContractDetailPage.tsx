@@ -1,8 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
 
-import { ArrowLeft, CalendarDays, FileText, ShieldCheck } from "lucide-react";
+import {
+  ArrowLeft,
+  CalendarDays,
+  FileText,
+  ShieldCheck,
+  Star,
+} from "lucide-react";
 
 import { useContract } from "../hooks/useContract";
+import { useToggleStar, useUpdateLifecycle } from "../hooks/useContractsByView";
+import type { LifecycleStatus } from "../types/contract";
 
 import ExtractedFieldsPanel from "../components/contracts/ExtractedFieldsPanel";
 import SummaryPanel from "../components/ui/SummaryPanel";
@@ -16,6 +24,7 @@ export default function ContractDetailPage() {
   const navigate = useNavigate();
 
   const { data: contract, isLoading, error } = useContract(id);
+  const { mutate: toggleStar, isPending: isStarring } = useToggleStar();
 
   /* =========================================================
      LOADING
@@ -174,9 +183,43 @@ export default function ContractDetailPage() {
               </div>
             </div>
 
-            {/* STATUS */}
+            {/* STATUS + ACTIONS */}
 
-            <ContractStatus status={contract.status} />
+            <div className="flex shrink-0 flex-wrap items-center gap-2">
+              {/* Star button */}
+              <button
+                type="button"
+                onClick={() =>
+                  contract && toggleStar(contract.id)
+                }
+                disabled={isStarring}
+                aria-label={
+                  contract.is_starred
+                    ? "Remove from starred"
+                    : "Add to starred"
+                }
+                className={`inline-flex h-9 items-center gap-2 rounded-lg border px-3 text-[12px] font-medium transition-colors ${
+                  contract.is_starred
+                    ? "border-[#e8d89a] bg-[#fffbee] text-[#a07a10] hover:bg-[#fdf4d3]"
+                    : "border-[#e3e3e3] bg-white text-[#666a72] hover:border-[#d2d2d2] hover:bg-[#fafafa]"
+                }`}
+              >
+                <Star
+                  size={14}
+                  strokeWidth={1.8}
+                  fill={contract.is_starred ? "currentColor" : "none"}
+                />
+                {contract.is_starred ? "Starred" : "Star"}
+              </button>
+
+              {/* Lifecycle selector */}
+              <LifecycleSelector
+                contractId={contract.id}
+                current={contract.lifecycle_status}
+              />
+
+              <ContractStatusBadge status={contract.status} />
+            </div>
           </div>
         </header>
 
@@ -293,11 +336,7 @@ function SectionHeader({ title, description }: SectionHeaderProps) {
    CONTRACT STATUS
 ============================================================ */
 
-type ContractStatusProps = {
-  status: string;
-};
-
-function ContractStatus({ status }: ContractStatusProps) {
+function ContractStatusBadge({ status }: { status: string }) {
   const normalizedStatus = status.toLowerCase();
 
   const isReady =
@@ -327,5 +366,88 @@ function ContractStatus({ status }: ContractStatusProps) {
 
       {status}
     </span>
+  );
+}
+
+/* ============================================================
+   LIFECYCLE SELECTOR
+============================================================ */
+
+const LIFECYCLE_OPTIONS: { value: LifecycleStatus; label: string }[] = [
+  { value: "draft", label: "Draft" },
+  { value: "active", label: "Active" },
+  { value: "executed", label: "Executed" },
+  { value: "expired", label: "Expired" },
+  { value: "terminated", label: "Terminated" },
+];
+
+const lifecycleBadgeStyle: Record<
+  LifecycleStatus,
+  { border: string; bg: string; text: string }
+> = {
+  draft: {
+    border: "border-[#e3e3e3]",
+    bg: "bg-[#f7f7f6]",
+    text: "text-[#666a72]",
+  },
+  active: {
+    border: "border-[#cfe5dd]",
+    bg: "bg-[#f0f8f5]",
+    text: "text-[#28755f]",
+  },
+  executed: {
+    border: "border-[#c9d9f7]",
+    bg: "bg-[#eef3fc]",
+    text: "text-[#2a57a8]",
+  },
+  expired: {
+    border: "border-[#eddbc4]",
+    bg: "bg-[#fdf5ec]",
+    text: "text-[#8b5e2a]",
+  },
+  terminated: {
+    border: "border-[#efcccc]",
+    bg: "bg-[#fff4f4]",
+    text: "text-[#c94b4b]",
+  },
+};
+
+function LifecycleSelector({
+  contractId,
+  current,
+}: {
+  contractId: string;
+  current: LifecycleStatus;
+}) {
+  const { mutate: updateLifecycle, isPending } = useUpdateLifecycle();
+  const style = lifecycleBadgeStyle[current] ?? lifecycleBadgeStyle.draft;
+
+  return (
+    <div className="relative">
+      <select
+        value={current}
+        disabled={isPending}
+        onChange={(e) =>
+          updateLifecycle({
+            contractId,
+            status: e.target.value as LifecycleStatus,
+          })
+        }
+        aria-label="Lifecycle stage"
+        className={`h-9 cursor-pointer appearance-none rounded-lg border pl-3 pr-7 text-[12px] font-medium transition-colors focus:outline-none ${
+          style.border
+        } ${style.bg} ${style.text}`}
+      >
+        {LIFECYCLE_OPTIONS.map((o) => (
+          <option key={o.value} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+      {/* chevron */}
+      <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[10px] opacity-60">
+        ▾
+      </span>
+    </div>
   );
 }

@@ -11,10 +11,19 @@ export interface ExtractedFields {
 
 export type ContractStatus = "uploaded" | "processing" | "extracted" | "failed";
 
+export type LifecycleStatus =
+  | "draft"
+  | "active"
+  | "executed"
+  | "expired"
+  | "terminated";
+
 export interface Contract {
   id: string;
   file_name: string;
   status: ContractStatus;
   uploaded_at: string;
   extracted_fields: ExtractedFields | null;
+  is_starred: boolean;
+  lifecycle_status: LifecycleStatus;
 }

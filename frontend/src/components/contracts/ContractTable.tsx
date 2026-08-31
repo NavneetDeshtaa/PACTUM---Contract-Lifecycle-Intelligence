@@ -3,14 +3,18 @@ import {
   ArrowUpRight,
   CalendarDays,
   FileText,
+  Star,
 } from "lucide-react";
 
 import type { Contract } from "../../types/contract";
 import { useRiskOverview } from "../../hooks/useRisk";
+import { useToggleStar } from "../../hooks/useContractsByView";
 import RiskBadge from "./RiskBadge";
 
 interface ContractTableProps {
   contracts: Contract[];
+  /** When set, only show rows whose AI risk level matches */
+  riskFilter?: string | null;
 }
 
 const statusStyles: Record<
@@ -52,8 +56,10 @@ const statusStyles: Record<
 
 export default function ContractTable({
   contracts,
+  riskFilter = null,
 }: ContractTableProps) {
   const navigate = useNavigate();
+  const { mutate: toggleStar, isPending: isStarring } = useToggleStar();
 
   // One bulk risk request for the entire table.
   // Avoids one request per contract row.
@@ -66,7 +72,15 @@ export default function ContractTable({
     ]),
   );
 
-  if (contracts.length === 0) {
+  // Apply risk filter if set
+  const visibleContracts = riskFilter
+    ? contracts.filter((c) => {
+        const risk = riskByContractId.get(c.id);
+        return risk?.risk_level === riskFilter;
+      })
+    : contracts;
+
+  if (visibleContracts.length === 0) {
     return (
       <div className="flex min-h-[300px] flex-col items-center justify-center px-6 text-center">
         <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-[#e3e3e3] bg-[#fafafa] text-[#656971]">
@@ -117,6 +131,10 @@ export default function ContractTable({
               </span>
             </th>
 
+            <th className="w-10 px-3 py-3.5 sm:px-4">
+              <span className="sr-only">Star</span>
+            </th>
+
             <th className="w-12 px-3 py-3.5 sm:px-4">
               <span className="sr-only">
                 Open contract
@@ -130,7 +148,7 @@ export default function ContractTable({
         ===================================================== */}
 
         <tbody>
-          {contracts.map((contract) => {
+          {visibleContracts.map((contract) => {
             const normalizedStatus =
               contract.status.toLowerCase();
 
@@ -239,6 +257,38 @@ export default function ContractTable({
                     level={risk?.risk_level}
                     score={risk?.risk_score}
                   />
+                </td>
+
+                {/* =================================================
+                    STAR
+                ================================================= */}
+
+                <td
+                  className="px-3 py-4 sm:px-4"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!isStarring) toggleStar(contract.id);
+                  }}
+                >
+                  <button
+                    type="button"
+                    aria-label={
+                      contract.is_starred
+                        ? "Remove from starred"
+                        : "Add to starred"
+                    }
+                    className={`flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
+                      contract.is_starred
+                        ? "text-[#c9960d]"
+                        : "text-[#d0d3da] hover:text-[#c9960d]"
+                    }`}
+                  >
+                    <Star
+                      size={14}
+                      strokeWidth={1.8}
+                      fill={contract.is_starred ? "currentColor" : "none"}
+                    />
+                  </button>
                 </td>
 
                 {/* =================================================

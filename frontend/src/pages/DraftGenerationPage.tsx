@@ -1,5 +1,3 @@
-import { Sparkles } from "lucide-react";
-
 import DraftGenerationForm from "../components/drafts/DraftGenerationForm";
 
 export default function DraftGenerationPage() {

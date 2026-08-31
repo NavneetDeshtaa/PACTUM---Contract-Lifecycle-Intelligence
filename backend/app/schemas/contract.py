@@ -2,7 +2,7 @@ import uuid
 from datetime import date, datetime
 from typing import Optional, List
 from pydantic import BaseModel
-from app.models.contract import ContractStatus
+from app.models.contract import ContractStatus, LifecycleStatus
 
 
 class ExtractedFieldsOut(BaseModel):
@@ -19,6 +19,10 @@ class ExtractedFieldsOut(BaseModel):
         from_attributes = True
 
 
+class LifecycleUpdateIn(BaseModel):
+    lifecycle_status: LifecycleStatus
+
+
 class ContractOut(BaseModel):
     id: uuid.UUID
     file_name: str
@@ -26,6 +30,8 @@ class ContractOut(BaseModel):
     uploaded_at: datetime
     extracted_fields: Optional[ExtractedFieldsOut] = None
     raw_text: Optional[str] = None
+    is_starred: bool = False
+    lifecycle_status: LifecycleStatus = LifecycleStatus.draft
 
     class Config:
-        from_attributes = True
+        from_attributes = True

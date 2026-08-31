@@ -15,8 +15,7 @@ export function useRegenerateObligations(contractId: string | undefined) {
     mutationFn: () => regenerateObligations(contractId as string),
     onSuccess: (data) => {
       queryClient.setQueryData(["obligations", contractId], data);
-      // Dashboard's "renewing in 30 days" card may now be stale for this
-      // contract's items -- invalidate so it refetches next view.
+      queryClient.invalidateQueries({ queryKey: ["obligations"] });
       queryClient.invalidateQueries({ queryKey: ["upcoming-obligations"] });
     },
   });
@@ -28,6 +27,7 @@ export function useCompleteObligation(contractId: string | undefined) {
     mutationFn: (obligationId: string) => completeObligation(contractId as string, obligationId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["obligations", contractId] });
+      queryClient.invalidateQueries({ queryKey: ["obligations"] });
       queryClient.invalidateQueries({ queryKey: ["upcoming-obligations"] });
     },
   });

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
-
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   FileSignature,
   Sparkles,
@@ -14,6 +13,8 @@ import {
 
 export default function DraftGenerationForm() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const initialTemplateId = searchParams.get("templateId") || "";
 
   const {
     data: templates,
@@ -22,7 +23,7 @@ export default function DraftGenerationForm() {
 
   const generate = useGenerateDraft();
 
-  const [templateId, setTemplateId] = useState("");
+  const [templateId, setTemplateId] = useState(initialTemplateId);
   const [customerName, setCustomerName] = useState("");
   const [ourCompanyName, setOurCompanyName] = useState("");
   const [value, setValue] = useState("");
