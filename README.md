@@ -91,52 +91,13 @@ Organizations spend millions managing contracts manually. PACTUM eliminates this
 
 ### High-Level Architecture Diagram
 
-Below are concise, clear architecture and flow diagrams (Mermaid) illustrating components, responsibilities, and data flows. If your README renderer supports Mermaid, these will render inline. If not, the ASCII fallbacks under each diagram explain the same flow.
+Below are concise, clear architecture and flow diagrams illustrating components, responsibilities, and data flows. Images are committed to /docs/assets so they render on GitHub. If your viewer does not render SVG inline, each image links to its source SVG.
 
-### Component Diagram (Mermaid)
+#### Component Diagram
 
-```mermaid
-flowchart LR
-  subgraph Client
-    U[User (Browser / CLI / API Client)]
-  end
+![Component Diagram](docs/assets/component_diagram.svg)
 
-  subgraph Frontend
-    FE[Web UI / SPA (TypeScript - React/Next.js)]
-  end
-
-  subgraph API
-    API[API Server (TypeScript - Fastify / Nest)]
-    Auth[Auth & RBAC]
-  end
-
-  subgraph Core
-    DB[(Postgres)]
-    Cache[(Redis)]
-    Queue[(Redis Streams / RabbitMQ)]
-    Storage[(S3 / MinIO)]
-    Worker[Worker (Python - Celery / FastAPI)]
-    Index[(Vector Index: Milvus / Pinecone / Elasticsearch)]
-    Notifier[Notifier (Email / Webhook)]
-    SearchAPI[Search API (TypeScript)]
-  end
-
-  U --> FE
-  FE -->|REST / GraphQL| API
-  API --> Auth
-  API --> DB
-  API --> Cache
-  API --> Storage
-  API --> Queue
-  API --> SearchAPI
-  Queue --> Worker
-  Worker --> Storage
-  Worker --> DB
-  Worker --> Index
-  Worker --> Notifier
-  SearchAPI --> Index
-  API -->|Websocket / SSE| FE
-```
+Caption: High-level components and data flows (User → Frontend → API → Storage/Queue → Worker → Index/DB). See the SVG in docs/assets for a scalable vector version.
 
 ASCII fallback:
 - User -> Web UI
@@ -145,56 +106,24 @@ ASCII fallback:
 - Queue -> Worker (Python) picks job -> downloads file -> runs OCR/Parsing/Extraction -> updates DB & Vector Index -> Notifier triggers
 - API & Search API serve results to UI
 
-### Contract Ingestion Sequence (Mermaid)
+#### Contract Ingestion Sequence
 
-```mermaid
-sequenceDiagram
-  participant User
-  participant Frontend
-  participant API
-  participant Storage
-  participant DB
-  participant Queue
-  participant Worker
-  participant Index
+![Contract Ingestion Sequence](docs/assets/ingestion_sequence.svg)
 
-  User->>Frontend: Upload contract + metadata
-  Frontend->>API: POST /contracts (request presigned URL)
-  API->>Storage: generate presigned URL / save raw file pointer
-  Frontend->>Storage: PUT file to presigned URL
-  API->>DB: create contract record (status: uploaded)
-  API->>Queue: enqueue analysis job (contract_id, storage_path)
-  Queue->>Worker: job delivered
-  Worker->>Storage: download file
-  Worker->>Worker: OCR / Parse / Chunk
-  Worker->>Index: embed chunks & store vectors
-  Worker->>DB: update extractedFields, status: analyzed
-  Worker->>API: (optional) webhook/notify
-  API->>Frontend: websocket notification / poll returns results
-```
+Caption: Sequence for upload, presigned upload, DB record creation, job enqueue, worker analysis, and notification.
 
 ASCII fallback:
 - Upload -> Presigned URL -> Store -> DB record -> enqueue
 - Worker consumes -> OCR & NLP -> embeddings -> updates DB & Index -> notify UI
 
-### ML Processing Pipeline (Mermaid)
+#### ML Processing Pipeline
 
-```mermaid
-flowchart TD
-  File[Raw Contract File (PDF/DOCX)] --> OCR[OCR & Text Extraction]
-  OCR --> Chunk[Semantic Chunking]
-  Chunk --> Embed[Embedding Generation (Python - SentenceTransformers)]
-  Chunk --> NER[Clause Classification / NER / Extraction]
-  Embed --> IndexStore[Vector Index]
-  NER --> DBStore[Extracted Fields -> Postgres]
-  IndexStore --> SearchAPI
-  DBStore --> API
-```
+![ML Processing Pipeline](docs/assets/ml_pipeline.svg)
+
+Caption: OCR → Chunking → Embedding → Index & DB storage. Metadata and chunk provenance are stored alongside vectors.
 
 Notes:
-- OCR stage can be conditional (skip for born-digital PDFs with selectable text)
-- Chunking strategy: overlap + semantic boundary detection to avoid split clauses
-- Embeddings are stored with metadata (contract_id, chunk_id, page_range, sha256 of raw chunk)
+- SVGs are in docs/assets and are the source of truth for diagram updates. If you need PNGs for external systems, tell me and I will export them too.
 
 ---
 
@@ -345,9 +274,9 @@ These are prioritized suggestions to make PACTUM more robust and enterprise-read
 This README was extended and improved programmatically to add diagrams, detailed architecture explanations, and a future roadmap.
 
 - Changes added by: GitHub Copilot (@copilot)
-- What was added: Mermaid diagrams, ML pipeline diagrams, advanced architecture details, security & observability notes, and a prioritized roadmap of future add-ons.
+- What was added: SVG diagrams in /docs/assets, rendered images in README, ML pipeline diagrams, advanced architecture details, security & observability notes, and a prioritized roadmap of future add-ons.
 
-If you want me to refine the diagrams into PNG/SVG assets and commit them to /docs/assets, or to push these README changes to a feature branch instead of the default branch, tell me and I will do that next.
+If you want me to export PNG thumbnails for broader preview compatibility or move these changes to a feature branch for PR review, say the word.
 
 ---
 
