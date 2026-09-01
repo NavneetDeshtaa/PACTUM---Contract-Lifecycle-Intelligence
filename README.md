@@ -56,9 +56,9 @@ Organizations spend millions managing contracts manually. PACTUM eliminates this
 -  **Third-party Integration** - Seamless integration with AI assistants
 -  **Tool Exposure** - Contract analysis and processing via standard MCP interface
 
-### High Level Architecture 
+### High Level Architecture :
 
-![Uploading image.png…]()
+<img width="1448" height="1086" alt="image" src="https://github.com/user-attachments/assets/68c131e4-4690-4c3f-8f26-dfdf4317701f" />
 
 ##  Installation & Setup (developer quickstart)
 
