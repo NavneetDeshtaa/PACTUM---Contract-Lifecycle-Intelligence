@@ -58,7 +58,7 @@ Organizations spend millions managing contracts manually. PACTUM eliminates this
 
 ### High Level Architecture 
 
-<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/7bece4b1-8a86-409d-b0f4-945a016913c9" />
+![Uploading image.png…]()
 
 ##  Installation & Setup (developer quickstart)
 
@@ -107,9 +107,6 @@ REDIS_URL=redis://redis:6379/0
 JWT_SECRET=replace-with-secure-value
 VECTOR_INDEX_URL=https://vector.example.com
 ```
-
-
-
 ---
 
 ## 📜 License
