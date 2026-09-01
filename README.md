@@ -57,72 +57,6 @@ Organizations spend millions managing contracts manually. PACTUM eliminates this
 - 🛠️ **Tool Exposure** - Contract analysis and processing via standard MCP interface
 
 ---
-
-## 🏗️ System Architecture
-
-### High-Level Architecture Diagram
-
-Below are concise, clear architecture and flow diagrams illustrating components, responsibilities, and data flows. Images are committed to /docs/assets so they render on GitHub. If your viewer does not render SVG inline, each image links to its source SVG.
-
-#### Component Diagram
-
-Caption: High-level components and data flows (User → Frontend → API → Storage/Queue → Worker → Index/DB). See the SVG in docs/assets for a scalable vector version.
-
-ASCII fallback:
-- User -> Web UI
-- Web UI -> API Server (TypeScript)
-- API -> stores raw contract to Object Storage, creates DB record, enqueues job
-- Queue -> Worker (Python) picks job -> downloads file -> runs OCR/Parsing/Extraction -> updates DB & Vector Index -> Notifier triggers
-- API & Search API serve results to UI
-
-#### Contract Ingestion Sequence
-
-Caption: Sequence for upload, presigned upload, DB record creation, job enqueue, worker analysis, and notification.
-
-ASCII fallback:
-- Upload -> Presigned URL -> Store -> DB record -> enqueue
-- Worker consumes -> OCR & NLP -> embeddings -> updates DB & Index -> notify UI
-
-#### ML Processing Pipeline
-
-Caption: OCR → Chunking → Embedding → Index & DB storage. Metadata and chunk provenance are stored alongside vectors.
-
-Notes:
-- SVGs are in docs/assets and are the source of truth for diagram updates. If you need PNGs for external systems, tell me and I will export them too.
-
----
-
-## 🔧 Technology Stack
-
-This repository's codebase is primarily TypeScript (frontend, API, orchestration) with Python powering ML/NLP workers. Suggested stack (map to folders in repo):
-
-- Frontend: React / Next.js (TypeScript), Vite for local dev
-- API: Node.js + TypeScript (Fastify / NestJS / Express)
-- Worker: Python 3.9+ (Celery, FastAPI for model endpoints)
-- Database: PostgreSQL
-- Queue: Redis Streams or RabbitMQ
-- Caching: Redis
-- Object Storage: S3 / MinIO
-- Vector Index: Pinecone / Milvus / Elasticsearch with vector plugin
-- Observability: Prometheus + Grafana, Sentry for errors
-- Containerization: Docker & Docker Compose
-
----
-
-## 🗂️ Project Structure (canonical / recommended)
-
-- /frontend — TypeScript SPA (React/Next)
-- /api — TypeScript API server (routes, controllers, services)
-- /worker — Python ML pipelines, Celery tasks
-- /models — model artifacts and pointers (large files ignored via .gitignore)
-- /infra — docker-compose, helm charts, infra docs
-- /scripts — helper scripts (migrations, seeders)
-- /tests — unit & integration tests
-
-(If the repo layout differs, keep this section aligned with the actual folder names.)
-
----
-
 ## ⚙️ Advanced Architecture Details
 
 - Data model: contracts (id, owner_id, status, metadata, storage_path, sha256), chunks (contract_id, chunk_id, text, embedding_id), vectors in index, extracted_fields table for structured outputs.
@@ -177,18 +111,11 @@ API (.env)
 PORT=8000
 DATABASE_URL=postgresql://pactum:pactum@postgres:5432/pactum
 REDIS_URL=redis://redis:6379/0
-S3_ENDPOINT=https://s3.amazonaws.com
-S3_BUCKET=pactum-raw
 JWT_SECRET=replace-with-secure-value
 VECTOR_INDEX_URL=https://vector.example.com
 ```
 
-## 🤝 Contributing
 
-- Fork → feature branch → PR
-- Fill PR template: describe change, link issue, add tests
-- Run the local test suite and lint before opening a PR
-- Use descriptive commits and squash/fixup before merge
 
 ---
 
