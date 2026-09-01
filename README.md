@@ -95,8 +95,6 @@ Below are concise, clear architecture and flow diagrams illustrating components,
 
 #### Component Diagram
 
-![Component Diagram](docs/assets/component_diagram.svg)
-
 Caption: High-level components and data flows (User → Frontend → API → Storage/Queue → Worker → Index/DB). See the SVG in docs/assets for a scalable vector version.
 
 ASCII fallback:
@@ -108,8 +106,6 @@ ASCII fallback:
 
 #### Contract Ingestion Sequence
 
-![Contract Ingestion Sequence](docs/assets/ingestion_sequence.svg)
-
 Caption: Sequence for upload, presigned upload, DB record creation, job enqueue, worker analysis, and notification.
 
 ASCII fallback:
@@ -117,8 +113,6 @@ ASCII fallback:
 - Worker consumes -> OCR & NLP -> embeddings -> updates DB & Index -> notify UI
 
 #### ML Processing Pipeline
-
-![ML Processing Pipeline](docs/assets/ml_pipeline.svg)
 
 Caption: OCR → Chunking → Embedding → Index & DB storage. Metadata and chunk provenance are stored alongside vectors.
 
@@ -217,68 +211,6 @@ S3_BUCKET=pactum-raw
 JWT_SECRET=replace-with-secure-value
 VECTOR_INDEX_URL=https://vector.example.com
 ```
-
-Worker (.env)
-```
-DATABASE_URL=postgresql://pactum:pactum@postgres:5432/pactum
-REDIS_URL=redis://redis:6379/0
-S3_ENDPOINT=https://s3.amazonaws.com
-S3_BUCKET=pactum-raw
-ML_MODEL_PATH=/models/latest
-```
-
----
-
-## 🧪 Testing
-
-- TypeScript: jest / vitest
-- Python: pytest
-- Integration: run tests against ephemeral Postgres + Redis (docker-compose)
-
----
-
-## 📦 Deployment
-
-- Containerize API and Worker
-- Use managed Postgres, S3, and Vector Index in production
-- Blue/green or canary deployments for API
-- CI pipeline: lint -> unit tests -> build images -> integration tests -> deploy
-
----
-
-## 🔭 Future Add-ons & Roadmap
-
-These are prioritized suggestions to make PACTUM more robust and enterprise-ready:
-
-1. Model Registry & Versioning
-   - Automate model packaging and add a model registry (MLflow / custom) so workers can pull specific model versions.
-2. Policy-as-Code
-   - Add a declarative policy engine to express compliance rules and run them as part of analysis.
-3. Human-in-the-loop Review Console
-   - Review UI for low-confidence extractions with accept/reject feedback to improve model retraining.
-4. Real-time Contract Monitoring
-   - Add event-driven listeners to trigger renewals/expiry notifications via calendar/email integrations.
-5. Advanced Explainability
-   - Provide clause-level provenance and highlight text spans that led to specific extraction results.
-6. Multi-tenant Hardened Architecture
-   - Tenant isolation, quotas, and billing integration for SaaS usage.
-7. Privacy-preserving features
-   - Field-level encryption, differential privacy options for analytics, or on-prem worker options for sensitive customers.
-8. On-device / Edge Inference
-   - Lightweight models for offline/edge processing (for sensitive environments).
-
----
-
-## 🧭 Maintainers & Changes by Assistant
-
-This README was extended and improved programmatically to add diagrams, detailed architecture explanations, and a future roadmap.
-
-- Changes added by: GitHub Copilot (@copilot)
-- What was added: SVG diagrams in /docs/assets, rendered images in README, ML pipeline diagrams, advanced architecture details, security & observability notes, and a prioritized roadmap of future add-ons.
-
-If you want me to export PNG thumbnails for broader preview compatibility or move these changes to a feature branch for PR review, say the word.
-
----
 
 ## 🤝 Contributing
 
