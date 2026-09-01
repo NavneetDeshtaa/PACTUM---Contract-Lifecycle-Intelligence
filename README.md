@@ -1,35 +1,6 @@
 # PACTUM - Contract Lifecycle Intelligence Platform
 
-> **An enterprise-grade AI-powered contract lifecycle management system with intelligent document processing, risk analytics, and workflow automation.**
-
-![TypeScript](https://img.shields.io/badge/TypeScript-70.4%25-3178C6?style=flat-square)
-![Python](https://img.shields.io/badge/Python-28.4%25-3776AB?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Active%20Development-brightgreen?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
-
----
-
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [System Architecture](#system-architecture)
-- [Technology Stack](#technology-stack)
-- [Project Structure](#project-structure)
-- [Advanced Architecture Details](#advanced-architecture-details)
-- [Installation & Setup](#installation--setup)
-- [API Endpoints](#api-endpoints)
-- [Configuration](#configuration)
-- [Development Guide](#development-guide)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [Maintainers & Changes by Assistant](#maintainers--changes-by-assistant)
-
----
-
-## 🎯 Overview
-
-**PACTUM** (Process Automation for Contract Term Understanding & Management) is a cutting-edge platform designed to revolutionize contract lifecycle management through intelligent document processing, risk analytics, and workflow automation.
+**PACTUM** (Process Automation for Contract Term Understanding & Management) is a cutting-edge platform designed to manage contract lifecycle management through intelligent document processing, risk analytics, and workflow automation.
 
 ### What Problem Does It Solve?
 
