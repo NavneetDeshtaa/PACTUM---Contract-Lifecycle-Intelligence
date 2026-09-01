@@ -55,7 +55,11 @@ Organizations spend millions managing contracts manually. PACTUM eliminates this
 -  **MCP Server Integration** - Expose platform tools to MCP-compatible clients
 -  **Third-party Integration** - Seamless integration with AI assistants
 -  **Tool Exposure** - Contract analysis and processing via standard MCP interface
-- 
+
+### High Level Architecture 
+
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/7bece4b1-8a86-409d-b0f4-945a016913c9" />
+
 ##  Installation & Setup (developer quickstart)
 
 1. Clone repository:
