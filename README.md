@@ -13,50 +13,50 @@ Organizations spend millions managing contracts manually. PACTUM eliminates this
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 ### Document Intelligence
-- 📄 **Multi-format PDF Processing** - Handles scanned PDFs, digital documents, and embedded images
-- 🔍 **Intelligent Chunking** - Semantic-aware document splitting with configurable overlap
-- 🧠 **Embedding Generation** - High-dimensional vector representations using Sentence Transformers
-- 📊 **Field Extraction** - Automatic extraction of critical contract terms and conditions
+-  **Multi-format PDF Processing** - Handles scanned PDFs, digital documents, and embedded images
+-  **Intelligent Chunking** - Semantic-aware document splitting with configurable overlap
+-  **Embedding Generation** - High-dimensional vector representations using Sentence Transformers
+-  **Field Extraction** - Automatic extraction of critical contract terms and conditions
 
 ### AI-Powered Search & Retrieval
-- 🔎 **Semantic Search** - RAG-based search across contract corpus
-- ⚡ **Fast Similarity Matching** - Vector-based search with caching
-- 💾 **Intelligent Caching** - SHA-256 based deduplication for efficiency
-- 📈 **Context-aware Results** - Retrieves most relevant contract clauses
+-  **Semantic Search** - RAG-based search across contract corpus
+-  **Fast Similarity Matching** - Vector-based search with caching
+-  **Intelligent Caching** - SHA-256 based deduplication for efficiency
+-  **Context-aware Results** - Retrieves most relevant contract clauses
 
 ### Risk Analytics & Compliance
-- ⚠️ **Automated Risk Assessment** - LangGraph-based risk detection pipeline
-- 📊 **Risk Scoring** - Multi-dimensional risk evaluation framework
-- 📈 **Analytics Dashboard** - Real-time contract metrics and visualizations
-- 🎯 **Policy Rule Engine** - Customizable compliance rules and policy validation
+-  **Automated Risk Assessment** - LangGraph-based risk detection pipeline
+-  **Risk Scoring** - Multi-dimensional risk evaluation framework
+-  **Analytics Dashboard** - Real-time contract metrics and visualizations
+-  **Policy Rule Engine** - Customizable compliance rules and policy validation
 
 ### Contract Workflow Automation
-- ✅ **Approval Workflows** - Multi-stage approval management with role-based access
-- 📋 **Template Management** - Reusable contract templates with AI assistance
-- 🔄 **Version Control** - Track all changes and maintain audit trail
-- 🎯 **Status Tracking** - Real-time contract lifecycle monitoring
+-  **Approval Workflows** - Multi-stage approval management with role-based access
+-  **Template Management** - Reusable contract templates with AI assistance
+-  **Version Control** - Track all changes and maintain audit trail
+-  **Status Tracking** - Real-time contract lifecycle monitoring
 
 ### Intelligent Drafting & Generation
-- 🤖 **AI Draft Generation** - LLM-powered contract drafting using Groq API (configurable)
-- 📝 **Smart Templates** - Context-aware template suggestions
-- ✏️ **Interactive Editing** - Real-time AI assistance while drafting
-- 📌 **Clause Library** - Searchable repository of contract clauses
+-  **AI Draft Generation** - LLM-powered contract drafting using Groq API (configurable)
+-  **Smart Templates** - Context-aware template suggestions
+-  **Interactive Editing** - Real-time AI assistance while drafting
+-  **Clause Library** - Searchable repository of contract clauses
 
 ### Background Job Processing
-- ⏰ **Celery Workers** - Asynchronous task processing (Python)
-- 📅 **Celery Beat** - Scheduled job execution (renewal checks, analytics updates)
-- 🔄 **Job Queuing** - Redis-backed job queue system
-- 📊 **Polling Support** - Real-time status updates for long-running tasks
+-  **Celery Workers** - Asynchronous task processing (Python)
+-  **Celery Beat** - Scheduled job execution (renewal checks, analytics updates)
+-  **Job Queuing** - Redis-backed job queue system
+-  **Polling Support** - Real-time status updates for long-running tasks
 
 ### Model Context Protocol (MCP)
 -  **MCP Server Integration** - Expose platform tools to MCP-compatible clients
 -  **Third-party Integration** - Seamless integration with AI assistants
 -  **Tool Exposure** - Contract analysis and processing via standard MCP interface
 - 
-## 🚀 Installation & Setup (developer quickstart)
+##  Installation & Setup (developer quickstart)
 
 1. Clone repository:
 ```bash
@@ -91,7 +91,7 @@ celery -A pactum_worker worker --loglevel=info
 
 ---
 
-## 🔐 Configuration
+##  Configuration
 
 Keep secrets out of source control. Example variables:
 
