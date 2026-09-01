@@ -52,21 +52,10 @@ Organizations spend millions managing contracts manually. PACTUM eliminates this
 - 📊 **Polling Support** - Real-time status updates for long-running tasks
 
 ### Model Context Protocol (MCP)
-- 🔗 **MCP Server Integration** - Expose platform tools to MCP-compatible clients
-- 🤝 **Third-party Integration** - Seamless integration with AI assistants
-- 🛠️ **Tool Exposure** - Contract analysis and processing via standard MCP interface
-
----
-## ⚙️ Advanced Architecture Details
-
-- Data model: contracts (id, owner_id, status, metadata, storage_path, sha256), chunks (contract_id, chunk_id, text, embedding_id), vectors in index, extracted_fields table for structured outputs.
-- Idempotency: store raw-file SHA256 and deduplicate analysis if hash exists.
-- Retries: worker tasks should be idempotent and retried via Celery retry policies. Use exponential backoff and dead-lettering for failing jobs.
-- Security: signed presigned URLs for uploads, RBAC on API, encrypted storage and DB, secrets in secret manager.
-- Observability: instrument API and workers with tracing (OpenTelemetry), metrics (custom and default), and centralized logs.
-
----
-
+-  **MCP Server Integration** - Expose platform tools to MCP-compatible clients
+-  **Third-party Integration** - Seamless integration with AI assistants
+-  **Tool Exposure** - Contract analysis and processing via standard MCP interface
+- 
 ## 🚀 Installation & Setup (developer quickstart)
 
 1. Clone repository:
