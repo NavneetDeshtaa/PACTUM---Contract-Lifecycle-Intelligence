@@ -56,7 +56,7 @@ export default function AIContractSearchModal({
 
   function handleSourceClick(contractId: string) {
     onClose();
-    navigate(`/contracts/${contractId}`);
+    navigate(`/app/contracts/${contractId}`);
   }
 
   return (
